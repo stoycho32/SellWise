@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SellWise.Core\SellWise.Core.csproj" />
+    <ProjectReference Include="..\SellWise.Infrastructure\SellWise.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
