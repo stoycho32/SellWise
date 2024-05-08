@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using static SellWise.Extensions.CustomClaims;
 
 namespace SellWise.Areas.Identity.Pages.Account
 {
