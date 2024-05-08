@@ -5,6 +5,10 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellWise", "SellWise\SellWise.csproj", "{DB41D4D8-5FFA-434B-9AA7-F76CB57B1398}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellWise.Core", "SellWise.Core\SellWise.Core.csproj", "{410C65EF-6216-4102-AE20-BABA1CD3073C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellWise.Infrastructure", "SellWise.Infrastructure\SellWise.Infrastructure.csproj", "{4B925CC8-640C-4B43-B9AB-E089F0F8BE62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{DB41D4D8-5FFA-434B-9AA7-F76CB57B1398}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB41D4D8-5FFA-434B-9AA7-F76CB57B1398}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB41D4D8-5FFA-434B-9AA7-F76CB57B1398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{410C65EF-6216-4102-AE20-BABA1CD3073C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{410C65EF-6216-4102-AE20-BABA1CD3073C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{410C65EF-6216-4102-AE20-BABA1CD3073C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{410C65EF-6216-4102-AE20-BABA1CD3073C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B925CC8-640C-4B43-B9AB-E089F0F8BE62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B925CC8-640C-4B43-B9AB-E089F0F8BE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B925CC8-640C-4B43-B9AB-E089F0F8BE62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B925CC8-640C-4B43-B9AB-E089F0F8BE62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
