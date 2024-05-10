@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SellWise.Data;
+using SellWise.Infrastructure.Repository;
 
 namespace SellWise.Extensions
 {
@@ -8,6 +9,7 @@ namespace SellWise.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IRepository, Repository>();
             return services;
         }
 
