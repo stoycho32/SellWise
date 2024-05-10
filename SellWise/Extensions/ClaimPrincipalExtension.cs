@@ -1,4 +1,6 @@
-﻿namespace System.Security.Claims
+﻿using static SellWise.Infrastructure.Constants.AdminConstant;
+
+namespace System.Security.Claims
 {
     public static class ClaimPrincipalExtension
     {
