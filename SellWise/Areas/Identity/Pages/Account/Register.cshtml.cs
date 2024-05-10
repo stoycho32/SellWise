@@ -6,21 +6,22 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SellWise.Infrastructure.Data.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace SellWise.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> signInManager;
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly IUserStore<IdentityUser> userStore;
+        private readonly SignInManager<Cashier> signInManager;
+        private readonly UserManager<Cashier> userManager;
+        private readonly IUserStore<Cashier> userStore;
         private readonly ILogger<RegisterModel> logger;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            IUserStore<IdentityUser> userStore,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<Cashier> userManager,
+            IUserStore<Cashier> userStore,
+            SignInManager<Cashier> signInManager,
             ILogger<RegisterModel> logger)
         {
             this.userManager = userManager;
@@ -69,7 +70,7 @@ namespace SellWise.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                IdentityUser user = CreateUser();
+                Cashier user = CreateUser();
 
 
                 await userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -104,26 +105,27 @@ namespace SellWise.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private Cashier CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<Cashier>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(Cashier)}'. " +
+                    $"Ensure that '{nameof(Cashier)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
-        private IUserEmailStore<IdentityUser> GetEmailStore()
+        private IUserEmailStore<Cashier> GetEmailStore()
         {
             if (!userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<IdentityUser>)userStore;
+
+            return (IUserEmailStore<Cashier>)userStore;
         }
     }
 }

@@ -6,17 +6,18 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SellWise.Infrastructure.Data.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace SellWise.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> signInManager;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<Cashier> signInManager;
+        private readonly UserManager<Cashier> userManager;
         private readonly ILogger<LoginModel> logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<Cashier> signInManager, UserManager<Cashier> userManager, ILogger<LoginModel> logger)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
@@ -41,7 +42,6 @@ namespace SellWise.Areas.Identity.Pages.Account
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
 
@@ -65,7 +65,7 @@ namespace SellWise.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe = false, lockoutOnFailure: false);
+                var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe = true, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {

@@ -5,7 +5,7 @@ using SellWise.Infrastructure.Data.Models;
 
 namespace SellWise.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Cashier>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
