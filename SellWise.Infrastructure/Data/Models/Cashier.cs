@@ -1,10 +1,11 @@
-﻿using SellWise.Infrastructure.Contracts;
+﻿using Microsoft.AspNetCore.Identity;
+using SellWise.Infrastructure.Contracts;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SellWise.Infrastructure.Data.Models
 {
-    public class Cashier : IDisable
+    public class Cashier : IdentityUser, IDisable
     {
         public Cashier()
         {
