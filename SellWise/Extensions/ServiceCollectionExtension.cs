@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
 using SellWise.Data;
 
 namespace SellWise.Extensions
