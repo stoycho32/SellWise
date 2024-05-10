@@ -30,6 +30,13 @@ namespace SellWise.Infrastructure.Data.Models
         [ForeignKey(nameof(CashierId))]
         public Cashier Cashier { get; set; } = null!;
 
+
+        [Required]
+        public int ShiftId { get; set; }
+        [ForeignKey(nameof(ShiftId))]
+        public Shift Shift { get; set; }
+
+
         [InverseProperty(nameof(Sale))]
         public List<SaleProduct> SaleProducts { get; set; }
     }
