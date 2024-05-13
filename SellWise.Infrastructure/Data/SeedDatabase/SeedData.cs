@@ -78,7 +78,8 @@ namespace SellWise.Infrastructure.Data.SeedDatabase
                 Id = 1,
                 ProductName = "Davidoff Gold",
                 ProductQuantity = 10,
-                ProductPrice = 6.20m,
+                ProductDeliveryPrice = 6.15m,
+                ProductSellingPrice = 6.20m,
                 ManufacturerId = 1
             };
 
@@ -87,7 +88,8 @@ namespace SellWise.Infrastructure.Data.SeedDatabase
                 Id = 2,
                 ProductName = "Karelia blue 100",
                 ProductQuantity = 10,
-                ProductPrice = 5.50m,
+                ProductDeliveryPrice = 5.40m,
+                ProductSellingPrice = 5.50m,
                 ManufacturerId = 3
             };
 
@@ -96,7 +98,8 @@ namespace SellWise.Infrastructure.Data.SeedDatabase
                 Id = 3,
                 ProductName = "Rothmans DarkBlue 100",
                 ProductQuantity = 10,
-                ProductPrice = 5.20m,
+                ProductDeliveryPrice = 5.10m,
+                ProductSellingPrice = 5.20m,
                 ManufacturerId = 3
             };
 
@@ -105,7 +108,8 @@ namespace SellWise.Infrastructure.Data.SeedDatabase
                 Id = 4,
                 ProductName = "Coca-Cola",
                 ProductQuantity = 24,
-                ProductPrice = 2.20m,
+                ProductDeliveryPrice = 1.15m,
+                ProductSellingPrice = 2.20m,
                 ManufacturerId = 4
             };
 
@@ -114,7 +118,8 @@ namespace SellWise.Infrastructure.Data.SeedDatabase
                 Id = 5,
                 ProductName = "Chio-Chips Paprika",
                 ProductQuantity = 6,
-                ProductPrice = 3.20m,
+                ProductDeliveryPrice = 2.10m,
+                ProductSellingPrice = 3.20m,
                 ManufacturerId = 5
             };
         }

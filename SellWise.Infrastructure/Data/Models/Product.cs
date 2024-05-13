@@ -26,9 +26,14 @@ namespace SellWise.Infrastructure.Data.Models
         public int ProductQuantity { get; set; }
 
         [Required]
+        [Precision(18, 2)]
+        [Range(0.01, 15000)]
+        public decimal ProductDeliveryPrice { get; set; }
+
+        [Required]
         [Precision(18,2)]
         [Range(0.01, 15000)]
-        public decimal ProductPrice { get; set; }
+        public decimal ProductSellingPrice { get; set; }
 
         [StringLength(250, MinimumLength = 3, ErrorMessage = "Product Comment Cannot Be Empty. It must be between 3 and 250 characters")]
         public string? ProductComment { get; set; }
