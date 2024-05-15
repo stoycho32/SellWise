@@ -1,6 +1,6 @@
 ﻿namespace SellWise.Infrastructure.Contracts
 {
-    public interface IFinalized
+    public interface IFinalize
     {
         public bool IsFinalized { get; set; }
 
