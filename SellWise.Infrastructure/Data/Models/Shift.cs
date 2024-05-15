@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SellWise.Infrastructure.Contracts;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SellWise.Infrastructure.Data.Models
 {
-    public class Shift
+    public class Shift : IFinalize
     {
         public Shift()
         {
-            this.IsShiftFinished = false;
-            this.ShiftStartTime = DateTime.Now;
+            this.IsFinalized = false;
             this.ShiftSales = new List<Sale>();
         }
 
@@ -21,12 +21,12 @@ namespace SellWise.Infrastructure.Data.Models
         public decimal ShiftTotalAmount { get; set; }
 
         [Required]
-        public bool IsShiftFinished { get; set; }
-
-        [Required]
         public DateTime ShiftStartTime { get; set; }
 
-        public DateTime? ShiftEndTime { get; set; }
+        [Required]
+        public bool IsFinalized { get; set; }
+
+        public DateTime? FinalizationDateTime { get; set; }
 
         //RELATIONS
         [InverseProperty(nameof(Shift))]
