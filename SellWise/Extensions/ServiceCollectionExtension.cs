@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SellWise.Core.Contracts;
+using SellWise.Core.Services;
 using SellWise.Data;
+using SellWise.Infrastructure.Data.Models;
 using SellWise.Infrastructure.Repository;
 
 namespace SellWise.Extensions
@@ -10,6 +13,7 @@ namespace SellWise.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IProductService, ProductService>();
             return services;
         }
 
@@ -26,7 +30,7 @@ namespace SellWise.Extensions
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<Cashier>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
                     options.Password.RequireNonAlphanumeric = true;
