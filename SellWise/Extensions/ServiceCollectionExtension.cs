@@ -13,7 +13,7 @@ namespace SellWise.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IRepository, Repository>();
-            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ISellService, SellService>();
             return services;
         }
 
