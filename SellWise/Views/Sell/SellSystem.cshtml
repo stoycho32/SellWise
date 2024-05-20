@@ -17,7 +17,14 @@
                 <div class="card-body d-flex justify-content-between align-items-center" style="width: 1000px; border: 1px solid #2295F0; border-radius: 5px;">
                     <h5 class="card-title" style="color: #757575; margin: 0;">@sale.SaleStartDateTime</h5>
                     <h5 class="card-title" style="color: #757575; margin: 0;">@sale.TotalPrice Lv.</h5>
-                    <a class="btn btn-success p-3 fw-bold" style="color: #DBF6FF; background-color: #1D7FCC; border: 0px; width: 120px; height: 40px; text-align: center; line-height: 5px;">Details</a>
+                    @if (sale.FinalizationDateTime != null)
+                    {
+                        <a asp-area="" asp-controller="Sell" asp-action="ContinueSale" asp-route-id="@sale.Id" class="btn btn-success p-3 fw-bold" style="color: #DBF6FF; background-color: #1D7FCC; border: 0px; width: 120px; height: 40px; text-align: center; line-height: 5px;">Continue Sale</a>
+                    }
+                    else
+                    {
+                        <a asp-area="" asp-controller="Sell" asp-action="SaleDetails" asp-route-id="@sale.Id" class="btn btn-success p-3 fw-bold" style="color: #DBF6FF; background-color: #1D7FCC; border: 0px; width: 120px; height: 40px; text-align: center; line-height: 5px;">Sale Details</a>
+                    }
                 </div>
             }
         }
@@ -31,7 +38,8 @@
 </div>
 
 
-@* 
+
+@* Will be implemented in the future. To Add filter option to locate specific sales
 <div style="display: flex; width: 1000px; justify-content: space-between; align-items: center;">
     <form asp-action="ParkingOccupations" method="GET" style="display: flex; flex-direction: row;">
         <input type="text" id="productName" name="productName" class="form-control" style="background-color: #DAF5FA; color: #757575; width: 200px; height: 40px; margin-right: 10px" placeholder="Product Name">
