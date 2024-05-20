@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SellWise.Infrastructure.Data.Models;
 using System.ComponentModel.DataAnnotations;
+using static SellWise.Extensions.CustomClaims;
 
 namespace SellWise.Areas.Identity.Pages.Account
 {
@@ -53,9 +54,13 @@ namespace SellWise.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public string FirstName { get; set; }
+            [Required]
+            [StringLength(100, MinimumLength = 2, ErrorMessage = "Cashier First Name Must Be Between 2 and 100 Characters Long.")]
+            public string FirstName { get; set; } = null!;
 
-            public string LastName { get; set; }
+            [Required]
+            [StringLength(100, MinimumLength = 2, ErrorMessage = "Cashier Last Name Must Be Between 2 and 100 Characters Long.")]
+            public string LastName { get; set; } = null!;
         }
 
 
@@ -72,6 +77,8 @@ namespace SellWise.Areas.Identity.Pages.Account
             {
                 Cashier user = CreateUser();
 
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
 
                 await userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
 
@@ -79,9 +86,7 @@ namespace SellWise.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    //To be implemented (Get User's firstname on registration with claim
-                    //await userManager.AddClaimAsync(user, new System.Security.Claims.Claim(UserFirstNameClaim,
-                    //    $"{user.FirstName}"));
+                    await userManager.AddClaimAsync(user, new System.Security.Claims.Claim(UserFirstNameClaim, $"{user.FirstName}"));
 
                     if (user.EmailConfirmed == false)
                     {
