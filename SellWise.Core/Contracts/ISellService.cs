@@ -9,6 +9,7 @@ namespace SellWise.Core.Contracts
 {
     public interface ISellService
     {
+        //Product functionality
         public Task<IEnumerable<ProductViewModel>> ViewAllProducts();
 
         public Task AddProductToSale(int productId);
@@ -19,10 +20,15 @@ namespace SellWise.Core.Contracts
 
         public Task DecreaseProductQuantity(int productId);
 
+        //Sale functionality
+        public Task MySales(string productName);
+
         public Task CreateSale();
 
-        public Task CancelSale();
+        public Task CancelSale(int id);
 
-        public Task FinalizeSale();
+        public Task FinalizeSale(int id);
+
+        public Task OpenSale(int id);
     }
 }

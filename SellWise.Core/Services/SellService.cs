@@ -21,12 +21,8 @@ namespace SellWise.Core.Services
             this.repository = repository;
         }
 
-        public Task AddProductToSale(int productId)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task CancelSale()
+        public Task MySales(string productName)
         {
             throw new NotImplementedException();
         }
@@ -36,17 +32,32 @@ namespace SellWise.Core.Services
             throw new NotImplementedException();
         }
 
+        public Task CancelSale(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task FinalizeSale(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task OpenSale(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task DecreaseProductQuantity(int productId)
         {
             throw new NotImplementedException();
         }
 
-        public Task FinalizeSale()
+        public Task IncreaseProductQuantity(int productId)
         {
             throw new NotImplementedException();
         }
 
-        public Task IncreaseProductQuantity(int productId)
+        public Task AddProductToSale(int productId)
         {
             throw new NotImplementedException();
         }
