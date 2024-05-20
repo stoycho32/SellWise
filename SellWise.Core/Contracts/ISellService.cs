@@ -21,7 +21,6 @@ namespace SellWise.Core.Contracts
 
         public Task DecreaseProductQuantity(int productId);
 
-        //Sale functionality
         public Task<IEnumerable<SaleViewModel>> MySales(string userId);
 
         public Task CreateSale();
