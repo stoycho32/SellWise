@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SellWise.Core.Contracts;
 
 namespace SellWise.Controllers
 {
+    [Authorize]
     public class SellController : Controller
     {
         private readonly ISellService productService;
@@ -12,7 +14,14 @@ namespace SellWise.Controllers
             this.productService = productService;
         }
 
+        [HttpGet]
         public IActionResult SellSystem()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult MySales()
         {
             return View();
         }
