@@ -20,6 +20,7 @@ namespace SellWise.Core.Services
         public async Task<IEnumerable<SaleViewModel>> MySales(string userId)
         {
             IEnumerable<SaleViewModel> sales = await this.repository.AllAsReadOnly<Sale>()
+                .AsSplitQuery()
                 .Where(c => c.CashierId == userId)
                 .Select(c => new SaleViewModel()
                 {
@@ -29,6 +30,7 @@ namespace SellWise.Core.Services
                     FinalizationDateTime = c.FinalizationDateTime,
                     TotalPrice = c.TotalPrice
                 })
+                .OrderByDescending(c => c.SaleStartDateTime)
                 .ToListAsync();
 
             return sales;
