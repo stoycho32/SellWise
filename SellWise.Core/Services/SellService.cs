@@ -56,6 +56,11 @@ namespace SellWise.Core.Services
             throw new NotImplementedException();
         }
 
+        public Task SaleDetails(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task DecreaseProductQuantity(int productId)
         {
             throw new NotImplementedException();

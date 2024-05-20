@@ -31,5 +31,7 @@ namespace SellWise.Core.Contracts
         public Task FinalizeSale(int id);
 
         public Task ContinueSale(int id);
+
+        public Task SaleDetails(int id);
     }
 }
