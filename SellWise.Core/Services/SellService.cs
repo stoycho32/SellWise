@@ -51,7 +51,7 @@ namespace SellWise.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task OpenSale(int id)
+        public Task ContinueSale(int id)
         {
             throw new NotImplementedException();
         }
