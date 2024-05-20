@@ -1,4 +1,5 @@
 ﻿using SellWise.Core.Models.ProductModel;
+using SellWise.Core.Models.SaleModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace SellWise.Core.Contracts
         public Task DecreaseProductQuantity(int productId);
 
         //Sale functionality
-        public Task MySales(string productName);
+        public Task<IEnumerable<SaleViewModel>> MySales(string userId);
 
         public Task CreateSale();
 

@@ -1,29 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SellWise.Core.Contracts;
+using SellWise.Core.Models.SaleModel;
+using System.Security.Claims;
 
 namespace SellWise.Controllers
 {
     [Authorize]
     public class SellController : Controller
     {
-        private readonly ISellService productService;
+        private readonly ISellService sellService;
 
-        public SellController(ISellService productService)
+        public SellController(ISellService sellService)
         {
-            this.productService = productService;
+            this.sellService = sellService;
         }
 
         [HttpGet]
-        public IActionResult SellSystem()
+        public async Task<IActionResult> SellSystem()
         {
-            return View();
-        }
+            string userId = User.Id();
 
-        [HttpGet]
-        public IActionResult MySales()
-        {
-            return View();
+            IEnumerable<SaleViewModel> sales = await this.sellService.MySales(userId);
+
+            return View(sales);
         }
     }
 }

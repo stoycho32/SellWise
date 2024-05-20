@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SellWise.Core.Contracts;
 using SellWise.Core.Models.ProductModel;
+using SellWise.Core.Models.SaleModel;
 using SellWise.Infrastructure.Data.Models;
 using SellWise.Infrastructure.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SellWise.Core.Services
 {
@@ -22,9 +17,21 @@ namespace SellWise.Core.Services
         }
 
 
-        public Task MySales(string productName)
+        public async Task<IEnumerable<SaleViewModel>> MySales(string userId)
         {
-            throw new NotImplementedException();
+            IEnumerable<SaleViewModel> sales = await this.repository.AllAsReadOnly<Sale>()
+                .Where(c => c.CashierId == userId)
+                .Select(c => new SaleViewModel()
+                {
+                    Id = c.Id,
+                    SaleStartDateTime = c.SaleStartDateTime,
+                    IsFinalized = c.IsFinalized,
+                    FinalizationDateTime = c.FinalizationDateTime,
+                    TotalPrice = c.TotalPrice
+                })
+                .ToListAsync();
+
+            return sales;
         }
 
         public Task CreateSale()
@@ -69,19 +76,7 @@ namespace SellWise.Core.Services
 
         public async Task<IEnumerable<ProductViewModel>> ViewAllProducts()
         {
-            var products = await this.repository.AllAsReadOnly<Product>()
-                .AsSplitQuery()
-                .Where(c => c.IsDeleted == false)
-                .Select(c => new ProductViewModel()
-                {
-                    Id = c.Id,
-                    ProductName = c.ProductName,
-                    ProductQuantity = c.ProductQuantity,
-                    ProductSellingPrice = c.ProductSellingPrice,
-                    ManufacturerName = c.Manufacturer.ManufacturerName
-                }).ToListAsync();
-
-            return products;
+            throw new NotImplementedException();
         }
     }
 }
