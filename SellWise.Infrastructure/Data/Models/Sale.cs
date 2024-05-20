@@ -22,6 +22,7 @@ namespace SellWise.Infrastructure.Data.Models
 
         [Required]
         public bool IsFinalized { get; set; }
+
         public DateTime? FinalizationDateTime { get; set; }
 
         [Required]
