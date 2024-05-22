@@ -40,7 +40,7 @@ app.UseEndpoints(endPoints =>
 {
     endPoints.MapControllerRoute
     (name: "default",
-    pattern: "{controller=Sell}/{action=SellSystem}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
     endPoints.MapDefaultControllerRoute();
     endPoints.MapRazorPages();
