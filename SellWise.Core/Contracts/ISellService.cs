@@ -23,9 +23,7 @@ namespace SellWise.Core.Contracts
 
         public Task<IEnumerable<SaleViewModel>> MySales(string userId);
 
-        public Task CreateSale();
-
-        public Task CancelSale(int id);
+        public Task CreateSale(string userId);
 
         public Task FinalizeSale(int id);
 

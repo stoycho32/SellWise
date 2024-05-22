@@ -25,5 +25,14 @@ namespace SellWise.Controllers
 
             return View(sales);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateSale()
+        {
+            string userId = User.Id();
+            await this.sellService.CreateSale(userId);
+
+            return RedirectToAction(nameof(SellSystem));
+        }
     }
 }

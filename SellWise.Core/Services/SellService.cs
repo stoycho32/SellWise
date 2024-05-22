@@ -30,15 +30,28 @@ namespace SellWise.Core.Services
                     FinalizationDateTime = c.FinalizationDateTime,
                     TotalPrice = c.TotalPrice
                 })
+                .OrderBy(c => c.IsFinalized == false)
                 .OrderByDescending(c => c.SaleStartDateTime)
                 .ToListAsync();
 
             return sales;
         }
 
-        public Task CreateSale()
+        public async Task CreateSale(string userId)
         {
-            throw new NotImplementedException();
+            Sale sale = new Sale();
+
+            Cashier cashier = await this.repository.AllAsReadOnly<Cashier>().FirstOrDefaultAsync(c => c.Id == userId);
+
+            if (cashier == null)
+            {
+                throw new ArgumentException("Invalid Cashier Details");
+            }
+
+
+
+            await this.repository.AddAsync(sale);
+            await this.repository.SaveChangesAsync();
         }
 
         public Task CancelSale(int id)
@@ -81,7 +94,7 @@ namespace SellWise.Core.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ProductViewModel>> ViewAllProducts()
+        public Task<IEnumerable<ProductViewModel>> ViewAllProducts()
         {
             throw new NotImplementedException();
         }

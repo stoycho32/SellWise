@@ -9,6 +9,7 @@ namespace SellWise.Infrastructure.Data.Models
     {
         public Shift()
         {
+            this.ShiftStartTime = DateTime.Now;
             this.IsFinalized = false;
             this.ShiftSales = new List<Sale>();
         }

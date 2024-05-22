@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SellWise.Core.Models.ProductModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SellWise.Core.Models.SaleModel
@@ -18,5 +19,7 @@ namespace SellWise.Core.Models.SaleModel
         [Required]
         [Precision(18, 2)]
         public decimal TotalPrice { get; set; }
+
+        public IEnumerable<ProductViewModel> SaleProducts { get; set; } = new List<ProductViewModel>();
     }
 }
