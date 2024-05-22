@@ -9,6 +9,7 @@ namespace SellWise.Infrastructure.Data.Models
     {
         public Sale()
         {
+            this.SaleStartDateTime = DateTime.Now;
             this.IsFinalized = false;
             this.SaleProducts = new List<SaleProduct>();
         }
