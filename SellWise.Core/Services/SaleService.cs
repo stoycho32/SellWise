@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SellWise.Core.Contracts;
+﻿using SellWise.Core.Contracts;
 using SellWise.Core.Models.ProductModel;
 using SellWise.Core.Models.SaleModel;
 using SellWise.Infrastructure.Data.Models;
@@ -7,11 +6,11 @@ using SellWise.Infrastructure.Repository;
 
 namespace SellWise.Core.Services
 {
-    public class SellService : ISellService
+    public class SaleService : ISaleService
     {
         private readonly IRepository repository;
 
-        public SellService(IRepository repository)
+        public SaleService(IRepository repository)
         {
             this.repository = repository;
         }

@@ -1,16 +1,10 @@
 ﻿using SellWise.Core.Models.ProductModel;
 using SellWise.Core.Models.SaleModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SellWise.Core.Contracts
 {
-    public interface ISellService
+    public interface ISaleService
     {
-        //Product functionality
         public Task<IEnumerable<ProductViewModel>> ViewAllProducts();
 
         public Task AddProductToSale(int productId);
