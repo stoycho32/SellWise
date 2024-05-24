@@ -16,12 +16,12 @@ namespace SellWise.Core.Services
             this.repository = repository;
         }
 
-        public Task StartShift()
+        public Task StartShift(string userId)
         {
-            throw new NotImplementedException();
+
         }
 
-        public Task ContinueShift()
+        public Task ContinueShift(string userId)
         {
 
         }
