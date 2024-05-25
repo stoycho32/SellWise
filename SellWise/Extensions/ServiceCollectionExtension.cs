@@ -14,6 +14,7 @@ namespace SellWise.Extensions
         {
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<ISaleService, SaleService>();
+            services.AddScoped<IShiftService, ShiftService>();
             return services;
         }
 
