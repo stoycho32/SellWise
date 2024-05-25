@@ -1,1 +1,33 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide In Example</title>
+    <style>
+        .slide-in {
+            opacity: 0;
+            transform: translateY(-100px);
+            transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+        }
+
+            .slide-in.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+    </style>
+</head>
+<body>
+    <div id="slide-in-container" class="slide-in" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80vh;">
+        <h1 style="color: #8F8F8F; margin-bottom: 20px;">Welcome To SellWise</h1>
+        <a asp-controller="Home" asp-action="StartShift" class="btn btn-success p-3 fw-bold rounded-pill" style="color: #DBF6FF; background-color: #1D7FCC; border: 0; width: 200px; height: 70px; text-align: center; line-height: 30px; font-size: 25px;">Start Shift</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var container = document.getElementById("slide-in-container");
+            container.classList.add("show");
+        });
+    </script>
+</body>
+</html>
