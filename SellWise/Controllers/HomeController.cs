@@ -1,21 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SellWise.Core.Contracts;
 using SellWise.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace SellWise.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IShiftService shiftService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IShiftService shiftService)
         {
             _logger = logger;
+            this.shiftService = shiftService;
         }
 
         public IActionResult Home()
         {
             return View();
+        }
+
+        public async Task<IActionResult> StartShift()
+        {
+            string userId = User.Id();
+
+            await this.shiftService.StartShift(userId);
+
+            return RedirectToAction(nameof(Home));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
