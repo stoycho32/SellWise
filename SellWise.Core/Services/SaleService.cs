@@ -1,4 +1,5 @@
-﻿using SellWise.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using SellWise.Core.Contracts;
 using SellWise.Core.Models.ProductModel;
 using SellWise.Core.Models.SaleModel;
 using SellWise.Infrastructure.Data.Models;
@@ -18,22 +19,7 @@ namespace SellWise.Core.Services
 
         public async Task<IEnumerable<SaleViewModel>> MySales(string userId)
         {
-            IEnumerable<SaleViewModel> sales = await this.repository.AllAsReadOnly<Sale>()
-                .AsSplitQuery()
-                .Where(c => c.CashierId == userId)
-                .Select(c => new SaleViewModel()
-                {
-                    Id = c.Id,
-                    SaleStartDateTime = c.SaleStartDateTime,
-                    IsFinalized = c.IsFinalized,
-                    FinalizationDateTime = c.FinalizationDateTime,
-                    TotalPrice = c.TotalPrice
-                })
-                .OrderBy(c => c.IsFinalized == false)
-                .OrderByDescending(c => c.SaleStartDateTime)
-                .ToListAsync();
-
-            return sales;
+            throw new NotImplementedException();
         }
 
         public async Task CreateSale(string userId)
