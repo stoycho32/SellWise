@@ -15,7 +15,7 @@ namespace SellWise.Infrastructure.Data.Models
         }
 
         [Key]
-        public int ShiftId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Precision(18, 2)]
