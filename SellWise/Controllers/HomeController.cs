@@ -28,7 +28,7 @@ namespace SellWise.Controllers
 
             await this.shiftService.StartShift(userId);
 
-            return RedirectToAction(nameof(Home));
+            return RedirectToAction("MySales", "Sale");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
