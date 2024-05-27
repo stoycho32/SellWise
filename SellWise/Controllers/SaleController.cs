@@ -29,7 +29,7 @@ namespace SellWise.Controllers
 
             await this.saleService.CreateSale(userId);
 
-            return View("Sale");
+            return RedirectToAction(nameof(MySales));
         }
 
         public async Task<ActionResult> Sale(int id)
