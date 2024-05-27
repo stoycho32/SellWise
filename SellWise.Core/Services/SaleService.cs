@@ -62,7 +62,12 @@ namespace SellWise.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public Task<SaleViewModel> GetSale(int id)
+        public async Task<SaleViewModel> GetSale(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DeleteSale(int id)
         {
             throw new NotImplementedException();
         }
