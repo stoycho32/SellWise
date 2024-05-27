@@ -32,11 +32,13 @@ namespace SellWise.Controllers
             return View("Sale");
         }
 
-        public async Task<ActionResult> OpenSale()
+        public async Task<ActionResult> Sale(int id)
         {
             var userId = User.Id();
 
+            SaleViewModel sale = await this.saleService.GetSale(id);
 
+            return View(sale);
         }
     }
 }
