@@ -27,6 +27,7 @@ namespace SellWise.Core.Services
                 {
                     Id = c.Id,
                     SaleStartDateTime = c.SaleStartDateTime,
+                    IsFinalized = c.IsFinalized,
                     FinalizationDateTime = c.FinalizationDateTime,
                     TotalPrice = c.TotalPrice
                 })
@@ -64,7 +65,31 @@ namespace SellWise.Core.Services
 
         public async Task<SaleViewModel> GetSale(int id)
         {
-            throw new NotImplementedException();
+            SaleViewModel? sale = await this.repository.AllAsReadOnly<Sale>()
+                .Where(c => c.Id == id)
+                .Select(c => new SaleViewModel()
+                {
+                    Id = c.Id,
+                    SaleStartDateTime = c.SaleStartDateTime,
+                    IsFinalized = c.IsFinalized,
+                    FinalizationDateTime = c.FinalizationDateTime,
+                    TotalPrice = c.TotalPrice,
+                    SaleProducts = c.SaleProducts.Select(c => new ProductViewModel()
+                    {
+                        Id = c.ProductId,
+                        ProductName = c.Product.ProductName,
+                        ProductQuantity = c.ProductQuantity,
+                        ProductSellingPrice = c.Product.ProductSellingPrice
+                    }).ToList()
+
+                }).FirstOrDefaultAsync();
+
+            if (sale == null)
+            {
+                throw new ArgumentException("The Sale Cannot Be Opened. It Is Invalid");
+            }
+
+            return sale;
         }
 
         public async Task DeleteSale(int id)
