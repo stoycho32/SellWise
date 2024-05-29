@@ -17,6 +17,11 @@ namespace SellWise.Core.Models.SaleModel
         public DateTime? FinalizationDateTime { get; set; }
 
         [Required]
+        public bool IsDiscountAplied { get; set; }
+
+        public int? DiscountPercentage { get; set; }
+
+        [Required]
         [Precision(18, 2)]
         public decimal TotalPrice { get; set; }
 

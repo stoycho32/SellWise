@@ -11,6 +11,7 @@ namespace SellWise.Infrastructure.Data.Models
         {
             this.SaleStartDateTime = DateTime.Now;
             this.IsFinalized = false;
+            this.IsDiscountAplied = false;
             this.SaleProducts = new List<SaleProduct>();
         }
 
@@ -29,6 +30,11 @@ namespace SellWise.Infrastructure.Data.Models
         [Required]
         [Precision(18, 2)]
         public decimal TotalPrice { get; set; }
+
+        [Required]
+        public bool IsDiscountAplied { get; set; }
+
+        public int? DiscountPercentage { get; set; }
 
         //RELATIONS
         [Required]
