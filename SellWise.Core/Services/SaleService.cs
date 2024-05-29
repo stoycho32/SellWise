@@ -29,6 +29,8 @@ namespace SellWise.Core.Services
                     SaleStartDateTime = c.SaleStartDateTime,
                     IsFinalized = c.IsFinalized,
                     FinalizationDateTime = c.FinalizationDateTime,
+                    IsDiscountAplied = c.IsDiscountAplied,
+                    DiscountPercentage = c.DiscountPercentage,
                     TotalPrice = c.TotalPrice
                 })
                 .ToListAsync();
@@ -73,6 +75,8 @@ namespace SellWise.Core.Services
                     SaleStartDateTime = c.SaleStartDateTime,
                     IsFinalized = c.IsFinalized,
                     FinalizationDateTime = c.FinalizationDateTime,
+                    IsDiscountAplied = c.IsDiscountAplied,
+                    DiscountPercentage = c.DiscountPercentage,
                     TotalPrice = c.TotalPrice,
                     SaleProducts = c.SaleProducts.Select(c => new ProductViewModel()
                     {
@@ -92,7 +96,7 @@ namespace SellWise.Core.Services
             return sale;
         }
 
-        public async Task DeleteSale(int id)
+        public async Task DeleteSale(int id, string userId)
         {
             throw new NotImplementedException();
         }
