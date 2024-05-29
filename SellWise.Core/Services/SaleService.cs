@@ -159,5 +159,10 @@ namespace SellWise.Core.Services
         {
             throw new NotImplementedException();
         }
+
+        private decimal CalculateTotalAmount()
+        {
+            return 0.0m;
+        }
     }
 }
