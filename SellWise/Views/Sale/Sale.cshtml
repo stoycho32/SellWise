@@ -1,1 +1,25 @@
-﻿<h1>This is the sale view which will allow you to sell items</h1>
+﻿@model SaleViewModel
+
+<div class="card text-center">
+    <div class="card-header">
+        Sale Number: @Model.Id
+    </div>
+    <div class="card-body" >
+        @{
+            if (Model.SaleProducts.Count() > 0)
+            {
+
+            }
+            else
+            {
+                <p class="card-text" style="color: #757575">There are no products.</p>
+            }
+        }
+    </div>
+    <div class="card-footer text-muted">
+        <a asp-controller="Sale" asp-action="Sale" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #1D7FCC; border: none; box-shadow: none">Add Product</a>
+        <a asp-controller="Sale" asp-action="Sale"  class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #1D7FCC; border: none; box-shadow: none">Add Discount</a>
+        <a asp-controller="Sale" asp-action="Sale" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #6AFF89; border: none; box-shadow: none">Finalize</a>
+        <a asp-controller="Sale" asp-action="MySales" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; color: #FF9F9F; background-color: #1D7FCC; border: none; box-shadow: none">Back To Sales</a>
+    </div>
+</div>
