@@ -55,7 +55,7 @@ namespace SellWise.Core.Services
                 throw new ArgumentException("Sale Cannot Be Created Due to Invalid Cashier");
             }
 
-            Sale sale = new Sale() 
+            Sale sale = new Sale()
             {
                 CashierId = cashier.Id,
                 ShiftId = currShift.Id
@@ -98,7 +98,26 @@ namespace SellWise.Core.Services
 
         public async Task DeleteSale(int id, string userId)
         {
-            throw new NotImplementedException();
+            Sale? sale = await this.repository.AllAsReadOnly<Sale>()
+                .Where(c => c.Id == id).FirstOrDefaultAsync();
+
+            if (sale == null)
+            {
+                throw new ArgumentException("Sale Cannot Be Deleted Due To Invalid Data");
+            }
+
+            if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
+            {
+                throw new InvalidOperationException("A Finalized Sale Cannot Be Deleted");
+            }
+
+            if (sale.CashierId != userId)
+            {
+                throw new InvalidOperationException("You Are Not Allowed To Delete This Sale");
+            }
+
+            await this.repository.Remove(sale);
+            await this.repository.SaveChangesAsync();
         }
 
         public Task CancelSale(int id)

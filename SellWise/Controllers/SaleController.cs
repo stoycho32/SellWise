@@ -40,5 +40,13 @@ namespace SellWise.Controllers
 
             return View(sale);
         }
+
+        public async Task<IActionResult> DeleteSale(int id)
+        {
+            var userId = User.Id();
+
+            await this.saleService.DeleteSale(id, userId);
+            return RedirectToAction(nameof(MySales));
+        }
     }
 }
