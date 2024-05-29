@@ -28,6 +28,11 @@ namespace SellWise.Infrastructure.Repository
             await DbSet<T>().AddAsync(entity);
         }
 
+        public async Task Remove<T>(T entity) where T : class
+        {
+            this.DbSet<T>().Remove(entity);
+        }
+
         public async Task<T?> GetByIdAsync<T>(object id) where T : class
         {
             return await DbSet<T>().FindAsync(id);

@@ -10,6 +10,8 @@ namespace SellWise.Infrastructure.Repository
 
         public  Task AddAsync<T>(T entity) where T : class;
 
+        public Task Remove<T>(T entity) where T : class;
+
         public  Task<T?> GetByIdAsync<T>(object id) where T : class;
 
         public  Task<int> SaveChangesAsync();
