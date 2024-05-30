@@ -50,12 +50,12 @@
                             <div>
                                 @if (sale.IsFinalized == true)
                                 {
-                                    <a asp-controller="AnotherController" asp-action="AnotherAction" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">Details</a>
+                                    <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@sale.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">Details</a>
                                 }
                                 else
                                 {
-                                    <a asp-controller="Sale" asp-action="Sale" asp-route-id="@sale.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">Continue</a>
-                                    <a asp-controller="Sale" asp-action="DeleteSale" asp-route-id="@sale.Id" class="btn btn-danger p-3 fw-bold rounded-pill" style="width: 130px; background-color: #ED6E70; border: none; box-shadow: none">Delete</a>
+                                    <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@sale.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">Continue</a>
+                                    <a asp-controller="Sale" asp-action="DeleteSale" asp-route-saleId="@sale.Id" class="btn btn-danger p-3 fw-bold rounded-pill" style="width: 130px; background-color: #ED6E70; border: none; box-shadow: none">Delete</a>
                                 }
                             </div>
                         </div>
