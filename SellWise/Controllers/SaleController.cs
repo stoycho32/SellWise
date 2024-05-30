@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SellWise.Core.Contracts;
+using SellWise.Core.Models.ProductModel;
 using SellWise.Core.Models.SaleModel;
 using System.Security.Claims;
 
@@ -14,6 +15,15 @@ namespace SellWise.Controllers
             this.saleService = saleService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AllProducts()
+        {
+            IEnumerable<ProductViewModel> products = await this.saleService.ViewAllProducts();
+
+            return View(products);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> MySales()
         {
             string userId = User.Id();
@@ -23,6 +33,7 @@ namespace SellWise.Controllers
             return View(sales);
         }
 
+        [HttpGet]
         public async Task<IActionResult> CreateSale()
         {
             string userId = User.Id();
@@ -32,20 +43,22 @@ namespace SellWise.Controllers
             return RedirectToAction(nameof(MySales));
         }
 
-        public async Task<ActionResult> Sale(int id)
+        [HttpGet]
+        public async Task<ActionResult> Sale(int saleId)
         {
             var userId = User.Id();
 
-            SaleViewModel sale = await this.saleService.GetSale(id);
+            SaleViewModel sale = await this.saleService.GetSale(saleId);
 
             return View(sale);
         }
 
-        public async Task<IActionResult> DeleteSale(int id)
+        [HttpGet]
+        public async Task<IActionResult> DeleteSale(int saleId)
         {
             var userId = User.Id();
 
-            await this.saleService.DeleteSale(id, userId);
+            await this.saleService.DeleteSale(saleId, userId);
             return RedirectToAction(nameof(MySales));
         }
     }
