@@ -24,4 +24,8 @@
     <ProjectReference Include="..\SellWise.Infrastructure\SellWise.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Product\" />
+  </ItemGroup>
+
 </Project>
