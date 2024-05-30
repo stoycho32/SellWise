@@ -65,10 +65,10 @@ namespace SellWise.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task<SaleViewModel> GetSale(int id)
+        public async Task<SaleViewModel> GetSale(int saleId)
         {
             SaleViewModel? sale = await this.repository.AllAsReadOnly<Sale>()
-                .Where(c => c.Id == id)
+                .Where(c => c.Id == saleId)
                 .Select(c => new SaleViewModel()
                 {
                     Id = c.Id,
@@ -96,10 +96,10 @@ namespace SellWise.Core.Services
             return sale;
         }
 
-        public async Task DeleteSale(int id, string userId)
+        public async Task DeleteSale(int saleId, string userId)
         {
-            Sale? sale = await this.repository.AllAsReadOnly<Sale>()
-                .Where(c => c.Id == id).FirstOrDefaultAsync();
+            Sale? sale = await this.repository.All<Sale>()
+                .Where(c => c.Id == saleId).FirstOrDefaultAsync();
 
             if (sale == null)
             {
@@ -116,21 +116,21 @@ namespace SellWise.Core.Services
                 throw new InvalidOperationException("You Are Not Allowed To Delete This Sale");
             }
 
+            if (sale.SaleProducts.Count() > 0)
+            {
+                sale.SaleProducts.Clear();
+            }
+
             await this.repository.Remove(sale);
             await this.repository.SaveChangesAsync();
         }
 
-        public Task CancelSale(int id)
+        public Task FinalizeSale(int saleId)
         {
             throw new NotImplementedException();
         }
 
-        public Task FinalizeSale(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SaleDetails(int id)
+        public Task SaleDetails(int saleId)
         {
             throw new NotImplementedException();
         }
@@ -155,9 +155,18 @@ namespace SellWise.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ProductViewModel>> ViewAllProducts()
+        public async Task<IEnumerable<ProductViewModel>> ViewAllProducts()
         {
-            throw new NotImplementedException();
+            IEnumerable<ProductViewModel> products = await this.repository.AllAsReadOnly<Product>()
+                .Select(c => new ProductViewModel()
+                {
+                    Id = c.Id,
+                    ProductName = c.ProductName,
+                    ProductSellingPrice = c.ProductSellingPrice,
+                    ProductQuantity = c.ProductQuantity
+                }).ToListAsync();
+
+            return products;
         }
 
         private decimal CalculateTotalAmount()

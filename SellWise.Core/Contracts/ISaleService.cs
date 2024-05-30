@@ -19,12 +19,12 @@ namespace SellWise.Core.Contracts
 
         public Task CreateSale(string userId);
 
-        public Task<SaleViewModel> GetSale(int id);
+        public Task<SaleViewModel> GetSale(int saleId);
 
-        public Task FinalizeSale(int id);
+        public Task FinalizeSale(int saleId);
 
-        public Task SaleDetails(int id);
+        public Task SaleDetails(int saleId);
 
-        public Task DeleteSale(int id, string userId);
+        public Task DeleteSale(int saleId, string userId);
     }
 }
