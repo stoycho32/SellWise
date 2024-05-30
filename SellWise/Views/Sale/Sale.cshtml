@@ -4,11 +4,32 @@
     <div class="card-header">
         Sale Number: @Model.Id
     </div>
-    <div class="card-body" >
+    <div class="card-body">
         @{
             if (Model.SaleProducts.Count() > 0)
             {
-
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Product Price</th>
+                            <th scope="col">Product Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.SaleProducts)
+                        {
+                            <tr>
+                                <th scope="row">@product.ProductName</th>
+                                <td>@product.ProductSellingPrice</td>
+                                <td>@product.ProductQuantity</td>
+                                <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">➖</a>
+                                <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">➕</a>
+                                <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">❌</a>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             }
             else
             {
@@ -17,9 +38,9 @@
         }
     </div>
     <div class="card-footer text-muted">
-        <a asp-controller="Sale" asp-action="Sale" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #1D7FCC; border: none; box-shadow: none">Add Product</a>
-        <a asp-controller="Sale" asp-action="Sale"  class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #1D7FCC; border: none; box-shadow: none">Add Discount</a>
-        <a asp-controller="Sale" asp-action="Sale" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #6AFF89; border: none; box-shadow: none">Finalize</a>
+        <a asp-controller="Sale" asp-action="AllProducts" asp-route-saleId="@Model.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #1D7FCC; border: none; box-shadow: none">Add Product</a>
+        <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #1D7FCC; border: none; box-shadow: none">Add Discount</a>
+        <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #6AFF89; border: none; box-shadow: none">Finalize</a>
         <a asp-controller="Sale" asp-action="MySales" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; color: #FF9F9F; background-color: #1D7FCC; border: none; box-shadow: none">Back To Sales</a>
     </div>
 </div>
