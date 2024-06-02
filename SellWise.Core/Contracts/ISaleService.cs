@@ -5,7 +5,7 @@ namespace SellWise.Core.Contracts
 {
     public interface ISaleService
     {
-        public Task<IEnumerable<ProductViewModel>> ViewAllProducts();
+        public Task<IEnumerable<ProductViewModel>> ViewAllProducts(int saleId);
 
         public Task AddProductToSale(int saleId, int productId);
 

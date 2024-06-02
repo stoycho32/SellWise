@@ -19,5 +19,8 @@ namespace SellWise.Core.Models.ProductModel
         [Precision(18, 2)]
         [Range(0.01, 15000)]
         public decimal ProductSellingPrice { get; set; }
+
+        [Required]
+        public int SaleId { get; set; }
     }
 }

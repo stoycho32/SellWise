@@ -16,9 +16,9 @@ namespace SellWise.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllProducts()
+        public async Task<IActionResult> AllProducts(int saleId)
         {
-            IEnumerable<ProductViewModel> products = await this.saleService.ViewAllProducts();
+            IEnumerable<ProductViewModel> products = await this.saleService.ViewAllProducts(saleId);
 
             return View(products);
         }
@@ -62,10 +62,12 @@ namespace SellWise.Controllers
             return RedirectToAction(nameof(MySales));
         }
 
-        [HttpPost]
-        public IActionResult AddProductToSale(int productId)
+        [HttpGet]
+        public async Task<IActionResult> AddProductToSale(int saleId, int productId)
         {
+            await this.saleService.AddProductToSale(saleId, productId);
 
+            return RedirectToAction(nameof(Sale), new {saleId});
         }
     }
 }

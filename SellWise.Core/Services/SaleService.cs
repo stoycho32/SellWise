@@ -200,7 +200,7 @@ namespace SellWise.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProductViewModel>> ViewAllProducts()
+        public async Task<IEnumerable<ProductViewModel>> ViewAllProducts(int saleId)
         {
             IEnumerable<ProductViewModel> products = await this.repository.AllAsReadOnly<Product>()
                 .Select(c => new ProductViewModel()
@@ -208,7 +208,8 @@ namespace SellWise.Core.Services
                     Id = c.Id,
                     ProductName = c.ProductName,
                     ProductSellingPrice = c.ProductSellingPrice,
-                    ProductQuantity = c.ProductQuantity
+                    ProductQuantity = c.ProductQuantity,
+                    SaleId = saleId
                 }).ToListAsync();
 
             return products;
