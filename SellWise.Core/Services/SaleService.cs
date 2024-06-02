@@ -99,6 +99,8 @@ namespace SellWise.Core.Services
         public async Task DeleteSale(int saleId, string userId)
         {
             Sale? sale = await this.repository.All<Sale>()
+                .AsSplitQuery()
+                .Include(c => c.SaleProducts)
                 .Where(c => c.Id == saleId).FirstOrDefaultAsync();
 
             if (sale == null)
@@ -157,6 +159,9 @@ namespace SellWise.Core.Services
             }
 
             Sale? sale = await this.repository.All<Sale>()
+                .AsSplitQuery()
+                .Include(c => c.SaleProducts)
+                .ThenInclude(c => c.Product)
                 .Where(c => c.Id == saleId).FirstOrDefaultAsync();
 
             if (sale == null)
@@ -167,6 +172,7 @@ namespace SellWise.Core.Services
             if (sale.SaleProducts.Any(c => c.ProductId == productToAdd.Id))
             {
                 sale.SaleProducts.FirstOrDefault(c => c.ProductId == productToAdd.Id).ProductQuantity += 1;
+                await this.repository.SaveChangesAsync();
             }
             else
             {
@@ -184,11 +190,18 @@ namespace SellWise.Core.Services
         public async Task RemoveProductFromSale(int saleId, int productId)
         {
             Sale? sale = await this.repository.All<Sale>()
+                .AsSplitQuery()
+                .Include(c => c.SaleProducts)
                 .Where(c => c.Id == saleId).FirstOrDefaultAsync();
 
             if (sale == null)
             {
                 throw new ArgumentException("The Sale Cannot Be Found");
+            }
+
+            if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
+            {
+                throw new InvalidOperationException("You Cannot Remove A Product From A Finalized Sale");
             }
 
             if (!sale.SaleProducts.Any(c => c.ProductId == productId))
