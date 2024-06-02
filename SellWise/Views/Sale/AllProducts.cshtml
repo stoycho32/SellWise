@@ -20,7 +20,7 @@
                     <td>@product.ProductName</td>
                     <td>@product.ProductSellingPrice</td>
                     <td>@product.ProductQuantity</td>
-                    <td><a asp-controller="Sale" asp-action="AddProduct" asp-route-saleId="@product.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">Select</a></td>
+                    <td><a asp-controller="Sale" asp-action="AddProduct" asp-route-saleId="@Sale.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">Select</a></td>
                 </tr>
             }
         </tbody>
