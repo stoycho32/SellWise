@@ -139,12 +139,75 @@ namespace SellWise.Core.Services
 
         public async Task DecreaseProductQuantity(int saleId, int productId)
         {
-            throw new NotImplementedException();
+            Sale? sale = await this.repository.All<Sale>()
+                .AsSplitQuery()
+                .Where(c => c.Id == saleId)
+                .Include(c => c.SaleProducts)
+                .FirstOrDefaultAsync();
+
+            if (sale == null)
+            {
+                throw new ArgumentException("The Product Quantity Cannot Be Decreased Because The Sale Is Not Found");
+            }
+
+            if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
+            {
+                throw new InvalidOperationException("You Cannot Decrease a Product In a Sale That Is Finalized");
+            }
+
+            if (!sale.SaleProducts.Any(c => c.ProductId == productId))
+            {
+                throw new ArgumentException("The Sale Does Not Contain The Product");
+            }
+
+            SaleProduct? saleProduct = sale.SaleProducts.FirstOrDefault(c => c.ProductId == productId);
+
+            if (saleProduct != null)
+            {
+                if (saleProduct.ProductQuantity == 1)
+                {
+                    sale.SaleProducts.RemoveAll(c => c.ProductId == saleProduct.ProductId);
+                }
+                else
+                {
+                    saleProduct.ProductQuantity -= 1;
+                }
+            }
+
+            await this.repository.SaveChangesAsync();
         }
 
         public async Task IncreaseProductQuantity(int saleId, int productId)
         {
-            throw new NotImplementedException();
+            Sale? sale = await this.repository.All<Sale>()
+                .AsSplitQuery()
+                .Where(c => c.Id == saleId)
+                .Include(c => c.SaleProducts)
+                .FirstOrDefaultAsync();
+
+            if (sale == null)
+            {
+                throw new ArgumentException("The Product Quantity Cannot Be Increased Because The Sale Is Not Found");
+            }
+
+            if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
+            {
+                throw new InvalidOperationException("You Cannot Incrase a Product In a Sale That Is Finalized");
+            }
+
+            if (!sale.SaleProducts.Any(c => c.ProductId == productId))
+            {
+                throw new ArgumentException("The Sale Does Not Contain The Product");
+            }
+
+            SaleProduct? saleProduct = sale.SaleProducts.FirstOrDefault(c => c.ProductId == productId);
+
+            if (saleProduct != null)
+            {
+                saleProduct.ProductQuantity += 1;
+            }
+
+            await this.repository.SaveChangesAsync();
         }
 
         public async Task AddProductToSale(int saleId, int productId)
@@ -181,8 +244,6 @@ namespace SellWise.Core.Services
                 {
                     saleProduct.ProductQuantity += 1;
                 }
-
-                await this.repository.SaveChangesAsync();
             }
             else
             {
@@ -193,8 +254,9 @@ namespace SellWise.Core.Services
                 };
 
                 sale.SaleProducts.Add(saleProduct);
-                await this.repository.SaveChangesAsync();
             }
+
+            await this.repository.SaveChangesAsync();
         }
 
         public async Task RemoveProductFromSale(int saleId, int productId)
