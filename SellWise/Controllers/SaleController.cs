@@ -67,7 +67,15 @@ namespace SellWise.Controllers
         {
             await this.saleService.AddProductToSale(saleId, productId);
 
-            return RedirectToAction(nameof(Sale), new {saleId});
+            return RedirectToAction(nameof(Sale), new { saleId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveProductFromSale(int saleId, int productId)
+        {
+            await this.saleService.RemoveProductFromSale(saleId, productId);
+
+            return RedirectToAction(nameof(Sale), new { saleId });
         }
     }
 }

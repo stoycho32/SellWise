@@ -45,7 +45,7 @@ namespace SellWise.Core.Services
 
             if (currShift == null)
             {
-                throw new ArgumentException("Sale Cannot Be Created Due to Invalid Shift");
+                throw new ArgumentException("Sale Cannot Be Created Due to An Invalid Shift");
             }
 
             Cashier? cashier = await this.repository.AllAsReadOnly<Cashier>().FirstOrDefaultAsync(c => c.Id == userId);
@@ -90,7 +90,7 @@ namespace SellWise.Core.Services
 
             if (sale == null)
             {
-                throw new ArgumentException("The Sale Cannot Be Opened. It Is Invalid");
+                throw new ArgumentException("Sale Cannot Be Opened As It Was Not Found");
             }
 
             return sale;
@@ -105,7 +105,7 @@ namespace SellWise.Core.Services
 
             if (sale == null)
             {
-                throw new ArgumentException("Sale Cannot Be Deleted Due To Invalid Data");
+                throw new ArgumentException("Sale Cannot Be Deleted As It Was Not Found");
             }
 
             if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
@@ -145,7 +145,6 @@ namespace SellWise.Core.Services
         public async Task IncreaseProductQuantity(int saleId, int productId)
         {
             throw new NotImplementedException();
-
         }
 
         public async Task AddProductToSale(int saleId, int productId)
@@ -155,7 +154,7 @@ namespace SellWise.Core.Services
 
             if (productToAdd == null)
             {
-                throw new ArgumentException("The Product Is Invalid");
+                throw new ArgumentException("The Product Cannot Be Found");
             }
 
             Sale? sale = await this.repository.All<Sale>()
@@ -169,9 +168,20 @@ namespace SellWise.Core.Services
                 throw new ArgumentException("The Sale Cannot Be Found");
             }
 
+            if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
+            {
+                throw new InvalidOperationException("You Cannot Add Product To a Finalized Sale");
+            }
+
             if (sale.SaleProducts.Any(c => c.ProductId == productToAdd.Id))
             {
-                sale.SaleProducts.FirstOrDefault(c => c.ProductId == productToAdd.Id).ProductQuantity += 1;
+                SaleProduct? saleProduct = sale.SaleProducts.FirstOrDefault(c => c.ProductId == productId);
+
+                if (saleProduct != null)
+                {
+                    saleProduct.ProductQuantity += 1;
+                }
+
                 await this.repository.SaveChangesAsync();
             }
             else
@@ -206,7 +216,7 @@ namespace SellWise.Core.Services
 
             if (!sale.SaleProducts.Any(c => c.ProductId == productId))
             {
-                throw new ArgumentException("The Product Cannot Be Deleted Because It Is Invalid");
+                throw new ArgumentException("The Product Cannot Be Deleted Because It Was Not Added To The Sale");
             }
 
             sale.SaleProducts.RemoveAll(c => c.ProductId == productId);
@@ -216,6 +226,7 @@ namespace SellWise.Core.Services
         public async Task<IEnumerable<ProductViewModel>> ViewAllProducts(int saleId)
         {
             IEnumerable<ProductViewModel> products = await this.repository.AllAsReadOnly<Product>()
+                .Where(c => c.IsDeleted == false)
                 .Select(c => new ProductViewModel()
                 {
                     Id = c.Id,
@@ -223,7 +234,8 @@ namespace SellWise.Core.Services
                     ProductSellingPrice = c.ProductSellingPrice,
                     ProductQuantity = c.ProductQuantity,
                     SaleId = saleId
-                }).ToListAsync();
+                })
+                .ToListAsync();
 
             return products;
         }

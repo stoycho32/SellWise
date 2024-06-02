@@ -2,7 +2,7 @@
 
 <div class="card text-center" style="border-radius: 15px; overflow: hidden;">
     <div class="card-header" style="border-radius: 15px 15px 0 0; background-color: #2295F0; color: #DBF6FF;">
-        Sale Number: @Model.Id
+        <b>Sale Number: @Model.Id</b>
     </div>
     <div class="card-body" style="border: none; background-color: #55C0F0; margin-bottom: 0;">
         @{
@@ -27,7 +27,7 @@
                                 <td style="border: none; color: #DBF6FF">
                                     <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success fw-bold rounded-pill" style="width: 50px; background-color: transparent; border: none; box-shadow: none; margin: 0; padding: 0; margin-right: 5px;">➖</a>
                                     <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success fw-bold rounded-pill" style="width: 50px; background-color: transparent; border: none; box-shadow: none; margin: 0; padding: 0; margin-right: 5px;">➕</a>
-                                    <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success fw-bold rounded-pill" style="width: 50px; background-color: transparent; border: none; box-shadow: none; margin: 0; padding: 0;">❌</a>
+                                    <a asp-controller="Sale" asp-action="RemoveProductFromSale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success fw-bold rounded-pill" style="width: 50px; background-color: transparent; border: none; box-shadow: none; margin: 0; padding: 0;">❌</a>
                                 </td>
                             </tr>
                         }
@@ -36,7 +36,7 @@
             }
             else
             {
-                <p class="card-text" style="color: #757575">There are no products.</p>
+                <p class="card-text" style="color: #DBF6FF">There are no products.</p>
             }
         }
     </div>
