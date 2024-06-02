@@ -5,6 +5,11 @@ namespace SellWise.Infrastructure.Data.Models
 {
     public class SaleProduct
     {
+        public SaleProduct()
+        {
+            this.ProductQuantity = 1;
+        }
+
         [Required]
         public int SaleId { get; set; }
         [ForeignKey(nameof(SaleId))]

@@ -7,13 +7,13 @@ namespace SellWise.Core.Contracts
     {
         public Task<IEnumerable<ProductViewModel>> ViewAllProducts();
 
-        public Task AddProductToSale(int productId);
+        public Task AddProductToSale(int saleId, int productId);
 
-        public Task RemoveProductFromSale(int productId);
+        public Task RemoveProductFromSale(int saleId, int productId);
 
-        public Task IncreaseProductQuantity(int productId);
+        public Task IncreaseProductQuantity(int saleId, int productId);
 
-        public Task DecreaseProductQuantity(int productId);
+        public Task DecreaseProductQuantity(int saleId, int productId);
 
         public Task<IEnumerable<SaleViewModel>> MySales(string userId);
 

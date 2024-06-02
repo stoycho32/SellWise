@@ -61,5 +61,11 @@ namespace SellWise.Controllers
             await this.saleService.DeleteSale(saleId, userId);
             return RedirectToAction(nameof(MySales));
         }
+
+        [HttpPost]
+        public IActionResult AddProductToSale(int productId)
+        {
+
+        }
     }
 }

@@ -135,24 +135,69 @@ namespace SellWise.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task DecreaseProductQuantity(int productId)
+        public async Task DecreaseProductQuantity(int saleId, int productId)
         {
             throw new NotImplementedException();
         }
 
-        public Task IncreaseProductQuantity(int productId)
+        public async Task IncreaseProductQuantity(int saleId, int productId)
         {
             throw new NotImplementedException();
+
         }
 
-        public Task AddProductToSale(int productId)
+        public async Task AddProductToSale(int saleId, int productId)
         {
-            throw new NotImplementedException();
+            Product? productToAdd = await this.repository.All<Product>()
+                .Where(c => c.Id == productId).FirstOrDefaultAsync();
+
+            if (productToAdd == null)
+            {
+                throw new ArgumentException("The Product Is Invalid");
+            }
+
+            Sale? sale = await this.repository.All<Sale>()
+                .Where(c => c.Id == saleId).FirstOrDefaultAsync();
+
+            if (sale == null)
+            {
+                throw new ArgumentException("The Sale Cannot Be Found");
+            }
+
+            if (sale.SaleProducts.Any(c => c.ProductId == productToAdd.Id))
+            {
+                sale.SaleProducts.FirstOrDefault(c => c.ProductId == productToAdd.Id).ProductQuantity += 1;
+            }
+            else
+            {
+                SaleProduct saleProduct = new SaleProduct()
+                {
+                    SaleId = sale.Id,
+                    ProductId = productToAdd.Id,
+                };
+
+                sale.SaleProducts.Add(saleProduct);
+                await this.repository.SaveChangesAsync();
+            }
         }
 
-        public Task RemoveProductFromSale(int productId)
+        public async Task RemoveProductFromSale(int saleId, int productId)
         {
-            throw new NotImplementedException();
+            Sale? sale = await this.repository.All<Sale>()
+                .Where(c => c.Id == saleId).FirstOrDefaultAsync();
+
+            if (sale == null)
+            {
+                throw new ArgumentException("The Sale Cannot Be Found");
+            }
+
+            if (!sale.SaleProducts.Any(c => c.ProductId == productId))
+            {
+                throw new ArgumentException("The Product Cannot Be Deleted Because It Is Invalid");
+            }
+
+            sale.SaleProducts.RemoveAll(c => c.ProductId == productId);
+            await this.repository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<ProductViewModel>> ViewAllProducts()
