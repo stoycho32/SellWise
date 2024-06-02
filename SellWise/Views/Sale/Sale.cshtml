@@ -1,31 +1,34 @@
 ﻿@model SaleViewModel
 
-<div class="card text-center">
-    <div class="card-header">
+<div class="card text-center" style="border-radius: 15px; overflow: hidden;">
+    <div class="card-header" style="border-radius: 15px 15px 0 0; background-color: #2295F0; color: #DBF6FF;">
         Sale Number: @Model.Id
     </div>
-    <div class="card-body">
+    <div class="card-body" style="border: none; background-color: #55C0F0; margin-bottom: 0;">
         @{
             if (Model.SaleProducts.Count() > 0)
             {
-                <table class="table">
+                <table class="table" style="border-collapse: collapse;">
                     <thead>
                         <tr>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Product Price</th>
-                            <th scope="col">Product Quantity</th>
+                            <th scope="col" style="border: none; color: #DBF6FF">Product Name</th>
+                            <th scope="col" style="border: none; color: #DBF6FF">Product Price</th>
+                            <th scope="col" style="border: none; color: #DBF6FF">Product Quantity</th>
+                            <th scope="col" style="border: none; color: #DBF6FF">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var product in Model.SaleProducts)
                         {
-                            <tr>
-                                <th scope="row">@product.ProductName</th>
-                                <td>@product.ProductSellingPrice</td>
-                                <td>@product.ProductQuantity</td>
-                                <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">➖</a>
-                                <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">➕</a>
-                                <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 130px; background-color: #1D7FCC; border: none; box-shadow: none">❌</a>
+                            <tr style="border: none;">
+                                <th scope="row" style="border: none; color: #DBF6FF">@product.ProductName</th>
+                                <td style="border: none; color: #DBF6FF">@product.ProductSellingPrice</td>
+                                <td style="border: none; color: #DBF6FF">@product.ProductQuantity</td>
+                                <td style="border: none; color: #DBF6FF">
+                                    <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success fw-bold rounded-pill" style="width: 50px; background-color: transparent; border: none; box-shadow: none; margin: 0; padding: 0; margin-right: 5px;">➖</a>
+                                    <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success fw-bold rounded-pill" style="width: 50px; background-color: transparent; border: none; box-shadow: none; margin: 0; padding: 0; margin-right: 5px;">➕</a>
+                                    <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" asp-route-productId="@product.Id" class="btn btn-success fw-bold rounded-pill" style="width: 50px; background-color: transparent; border: none; box-shadow: none; margin: 0; padding: 0;">❌</a>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -37,7 +40,7 @@
             }
         }
     </div>
-    <div class="card-footer text-muted">
+    <div class="card-footer text-muted" style="border-radius: 0 0 15px 15px; background-color: #55C0F0; border-top: none; margin-top: 0;">
         <a asp-controller="Sale" asp-action="AllProducts" asp-route-saleId="@Model.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #1D7FCC; border: none; box-shadow: none">Add Product</a>
         <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #1D7FCC; border: none; box-shadow: none">Add Discount</a>
         <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #6AFF89; border: none; box-shadow: none">Finalize</a>
