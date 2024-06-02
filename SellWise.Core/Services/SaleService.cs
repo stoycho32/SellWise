@@ -227,10 +227,5 @@ namespace SellWise.Core.Services
 
             return products;
         }
-
-        private decimal CalculateTotalAmount()
-        {
-            return 0.0m;
-        }
     }
 }
