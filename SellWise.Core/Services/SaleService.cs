@@ -128,7 +128,7 @@ namespace SellWise.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public Task FinalizeSale(int saleId)
+        public Task FinalizeSale(int saleId, string userId)
         {
             throw new NotImplementedException();
         }

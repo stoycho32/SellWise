@@ -21,7 +21,7 @@ namespace SellWise.Core.Contracts
 
         public Task<SaleViewModel> GetSale(int saleId);
 
-        public Task FinalizeSale(int saleId);
+        public Task FinalizeSale(int saleId, string userId);
 
         public Task SaleDetails(int saleId);
 
