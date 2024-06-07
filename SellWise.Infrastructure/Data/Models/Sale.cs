@@ -31,6 +31,9 @@ namespace SellWise.Infrastructure.Data.Models
         [Precision(18, 2)]
         public decimal TotalPrice { get; set; }
 
+        [Precision(18, 2)]
+        public decimal? TotalPriceWithDiscount { get; set; }
+
         [Required]
         public bool IsDiscountAplied { get; set; }
 

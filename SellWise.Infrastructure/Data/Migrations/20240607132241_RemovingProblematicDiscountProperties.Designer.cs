@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SellWise.Data;
 
@@ -11,9 +12,10 @@ using SellWise.Data;
 namespace SellWise.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240607132241_RemovingProblematicDiscountProperties")]
+    partial class RemovingProblematicDiscountProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -423,14 +425,8 @@ namespace SellWise.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("DiscountPercentage")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("FinalizationDateTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDiscountAplied")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsFinalized")
                         .HasColumnType("bit");
@@ -442,10 +438,6 @@ namespace SellWise.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("TotalPriceWithDiscount")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
