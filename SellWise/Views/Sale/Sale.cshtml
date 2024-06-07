@@ -50,7 +50,11 @@
                             </tr>
                         }
                     <td style="border: none; color: #8AFF80; display: flex; justify-content: center; align-items: center; font-size: 20px;"><b>Total Price: @Model.TotalPrice</b></td>
-                    
+                    @if(@Model.IsDiscountAplied == true)
+                    {
+                        <td style="border: none; color: #8AFF80; display: flex; justify-content: center; align-items: center; font-size: 20px;"><b>Total Price With Discount: @Model.TotalPriceWithDiscount</b></td>
+                    }
+
                 </table>
             }
             else

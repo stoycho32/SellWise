@@ -32,7 +32,8 @@ namespace SellWise.Core.Services
                     FinalizationDateTime = c.FinalizationDateTime,
                     IsDiscountAplied = c.IsDiscountAplied,
                     DiscountPercentage = c.DiscountPercentage,
-                    TotalPrice = c.TotalPrice
+                    TotalPrice = c.TotalPrice,
+                    TotalPriceWithDiscount = c.TotalPriceWithDiscount
                 })
                 .ToListAsync();
 
@@ -79,6 +80,7 @@ namespace SellWise.Core.Services
                     IsDiscountAplied = c.IsDiscountAplied,
                     DiscountPercentage = c.DiscountPercentage,
                     TotalPrice = c.TotalPrice,
+                    TotalPriceWithDiscount = c.TotalPriceWithDiscount,
                     SaleProducts = c.SaleProducts.Select(c => new ProductViewModel()
                     {
                         Id = c.ProductId,

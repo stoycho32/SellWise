@@ -21,6 +21,9 @@ namespace SellWise.Core.Models.SaleModel
 
         public int? DiscountPercentage { get; set; }
 
+        [Precision(18, 2)]
+        public decimal? TotalPriceWithDiscount { get; set; }
+
         [Required]
         [Precision(18, 2)]
         public decimal TotalPrice { get; set; }
