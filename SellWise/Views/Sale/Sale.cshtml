@@ -17,7 +17,7 @@
                             <th scope="col" style="border: none; color: #DBF6FF">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    
                         @foreach (var product in Model.SaleProducts)
                         {
                             <tr style="border: none;">
@@ -50,7 +50,7 @@
                             </tr>
                         }
                     <td style="border: none; color: #8AFF80; display: flex; justify-content: center; align-items: center; font-size: 20px;"><b>Total Price: @Model.TotalPrice</b></td>
-                    </tbody>
+                    
                 </table>
             }
             else
