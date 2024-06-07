@@ -152,7 +152,7 @@ namespace SellWise.Core.Services
 
             if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
             {
-                throw new InvalidOperationException("You Cannot Decrease a Product In a Sale That Is Finalized");
+                throw new InvalidOperationException("You Cannot Decrease Product Quantity In a Sale That Is Finalized");
             }
 
             if (!sale.SaleProducts.Any(c => c.ProductId == productId))
@@ -192,7 +192,7 @@ namespace SellWise.Core.Services
 
             if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
             {
-                throw new InvalidOperationException("You Cannot Incrase a Product In a Sale That Is Finalized");
+                throw new InvalidOperationException("You Cannot Incrase Product Quantity In a Sale That Is Finalized");
             }
 
             if (!sale.SaleProducts.Any(c => c.ProductId == productId))
@@ -300,6 +300,11 @@ namespace SellWise.Core.Services
                 .ToListAsync();
 
             return products;
+        }
+
+        private decimal CalculateTotalPrice(Sale sale)
+        {
+            return 0.0m;
         }
     }
 }

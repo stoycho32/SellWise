@@ -70,7 +70,7 @@ namespace SellWise.Controllers
             return RedirectToAction(nameof(Sale), new { saleId });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveProductFromSale(int saleId, int productId)
         {
             await this.saleService.RemoveProductFromSale(saleId, productId);
@@ -78,7 +78,7 @@ namespace SellWise.Controllers
             return RedirectToAction(nameof(Sale), new { saleId });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> IncreaseProductQuantity(int saleId, int productId)
         {
             await this.saleService.IncreaseProductQuantity(saleId, productId);
@@ -86,7 +86,7 @@ namespace SellWise.Controllers
             return RedirectToAction(nameof(Sale), new { saleId });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> DecreaseProductQuantity(int saleId, int productId)
         {
             await this.saleService.DecreaseProductQuantity(saleId, productId);
