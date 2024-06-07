@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore;
 using SellWise.Core.Contracts;
 using SellWise.Core.Models.ProductModel;
 using SellWise.Core.Models.SaleModel;
@@ -45,20 +46,20 @@ namespace SellWise.Core.Services
 
             if (currShift == null)
             {
-                throw new ArgumentException("Sale Cannot Be Created Due to An Invalid Shift");
+                throw new ArgumentException("Sale Cannot Be Created Due to an Invalid Shift");
             }
 
             Cashier? cashier = await this.repository.AllAsReadOnly<Cashier>().FirstOrDefaultAsync(c => c.Id == userId);
 
             if (cashier == null)
             {
-                throw new ArgumentException("Sale Cannot Be Created Due to Invalid Cashier");
+                throw new ArgumentException("Sale Cannot Be Created Due to an Invalid Cashier");
             }
 
             Sale sale = new Sale()
             {
                 CashierId = cashier.Id,
-                ShiftId = currShift.Id
+                ShiftId = currShift.Id,
             };
 
             await this.repository.AddAsync(sale);
@@ -143,6 +144,7 @@ namespace SellWise.Core.Services
                 .AsSplitQuery()
                 .Where(c => c.Id == saleId)
                 .Include(c => c.SaleProducts)
+                .ThenInclude(c => c.Product)
                 .FirstOrDefaultAsync();
 
             if (sale == null)
@@ -174,6 +176,7 @@ namespace SellWise.Core.Services
                 }
             }
 
+            sale.TotalPrice = this.CalculateTotalPrice(sale);
             await this.repository.SaveChangesAsync();
         }
 
@@ -183,6 +186,7 @@ namespace SellWise.Core.Services
                 .AsSplitQuery()
                 .Where(c => c.Id == saleId)
                 .Include(c => c.SaleProducts)
+                .ThenInclude(c => c.Product)
                 .FirstOrDefaultAsync();
 
             if (sale == null)
@@ -207,6 +211,7 @@ namespace SellWise.Core.Services
                 saleProduct.ProductQuantity += 1;
             }
 
+            sale.TotalPrice = this.CalculateTotalPrice(sale);
             await this.repository.SaveChangesAsync();
         }
 
@@ -250,12 +255,15 @@ namespace SellWise.Core.Services
                 SaleProduct saleProduct = new SaleProduct()
                 {
                     SaleId = sale.Id,
+                    Sale = sale,
                     ProductId = productToAdd.Id,
+                    Product = productToAdd
                 };
 
                 sale.SaleProducts.Add(saleProduct);
             }
 
+            sale.TotalPrice = this.CalculateTotalPrice(sale);
             await this.repository.SaveChangesAsync();
         }
 
@@ -264,6 +272,7 @@ namespace SellWise.Core.Services
             Sale? sale = await this.repository.All<Sale>()
                 .AsSplitQuery()
                 .Include(c => c.SaleProducts)
+                .ThenInclude(c => c.Product)
                 .Where(c => c.Id == saleId).FirstOrDefaultAsync();
 
             if (sale == null)
@@ -280,6 +289,8 @@ namespace SellWise.Core.Services
             {
                 throw new ArgumentException("The Product Cannot Be Deleted Because It Was Not Added To The Sale");
             }
+
+            sale.TotalPrice = this.CalculateTotalPrice(sale);
 
             sale.SaleProducts.RemoveAll(c => c.ProductId == productId);
             await this.repository.SaveChangesAsync();
@@ -304,7 +315,9 @@ namespace SellWise.Core.Services
 
         private decimal CalculateTotalPrice(Sale sale)
         {
-            return 0.0m;
+
+            decimal totalPrice = sale.SaleProducts.Sum(c => c.ProductQuantity * c.Product.ProductSellingPrice);
+            return totalPrice;
         }
     }
 }
