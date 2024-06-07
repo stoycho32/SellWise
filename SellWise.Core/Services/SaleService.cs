@@ -292,9 +292,10 @@ namespace SellWise.Core.Services
                 throw new ArgumentException("The Product Cannot Be Deleted Because It Was Not Added To The Sale");
             }
 
-            sale.TotalPrice = this.CalculateTotalPrice(sale);
 
             sale.SaleProducts.RemoveAll(c => c.ProductId == productId);
+
+            sale.TotalPrice = this.CalculateTotalPrice(sale);
             await this.repository.SaveChangesAsync();
         }
 
