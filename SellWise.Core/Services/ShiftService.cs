@@ -21,7 +21,7 @@ namespace SellWise.Core.Services
 
             if (cashier == null)
             {
-                throw new ArgumentException("Invalid Profile");
+                throw new ArgumentException("You Cannot Start or Continue Shift as Your Credentials Are Not Valid");
             }
 
             Shift? shift = await this.repository.AllAsReadOnly<Shift>()
