@@ -318,7 +318,6 @@ namespace SellWise.Core.Services
 
         private decimal CalculateTotalPrice(Sale sale)
         {
-
             decimal totalPrice = sale.SaleProducts.Sum(c => c.ProductQuantity * c.Product.ProductSellingPrice);
             return totalPrice;
         }
