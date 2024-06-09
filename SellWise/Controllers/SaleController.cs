@@ -48,7 +48,7 @@ namespace SellWise.Controllers
         {
             var userId = User.Id();
 
-            SaleViewModel sale = await this.saleService.GetSale(saleId);
+            SaleViewModel sale = await this.saleService.GetSale(saleId, userId);
 
             return View(sale);
         }
@@ -65,7 +65,9 @@ namespace SellWise.Controllers
         [HttpGet]
         public async Task<IActionResult> AddProductToSale(int saleId, int productId)
         {
-            await this.saleService.AddProductToSale(saleId, productId);
+            string userId = User.Id();
+
+            await this.saleService.AddProductToSale(saleId, productId, userId);
 
             return RedirectToAction(nameof(Sale), new { saleId });
         }
@@ -73,7 +75,9 @@ namespace SellWise.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveProductFromSale(int saleId, int productId)
         {
-            await this.saleService.RemoveProductFromSale(saleId, productId);
+            string userId = User.Id();
+
+            await this.saleService.RemoveProductFromSale(saleId, productId, userId);
 
             return RedirectToAction(nameof(Sale), new { saleId });
         }
@@ -81,7 +85,9 @@ namespace SellWise.Controllers
         [HttpPost]
         public async Task<IActionResult> IncreaseProductQuantity(int saleId, int productId)
         {
-            await this.saleService.IncreaseProductQuantity(saleId, productId);
+            string userId = User.Id();
+
+            await this.saleService.IncreaseProductQuantity(saleId, productId, userId);
 
             return RedirectToAction(nameof(Sale), new { saleId });
         }
@@ -89,15 +95,21 @@ namespace SellWise.Controllers
         [HttpPost]
         public async Task<IActionResult> DecreaseProductQuantity(int saleId, int productId)
         {
-            await this.saleService.DecreaseProductQuantity(saleId, productId);
+            string userId = User.Id();
+
+            await this.saleService.DecreaseProductQuantity(saleId, productId, userId);
 
             return RedirectToAction(nameof(Sale), new { saleId });
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> AddDiscountToSale(int saleId, int discountPercentage)
-        //{
+        [HttpPost]
+        public async Task<IActionResult> AddDiscountToSale(int saleId, int discountPercentage)
+        {
+            string userId = User.Id();
 
-        //}
+            await this.saleService.AddDiscount(saleId, discountPercentage, userId);
+
+            return RedirectToAction(nameof(Sale), new { saleId });
+        }
     }
 }
