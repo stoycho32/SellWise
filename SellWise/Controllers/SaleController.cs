@@ -93,5 +93,11 @@ namespace SellWise.Controllers
 
             return RedirectToAction(nameof(Sale), new { saleId });
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> AddDiscountToSale(int saleId, int discountPercentage)
+        //{
+
+        //}
     }
 }
