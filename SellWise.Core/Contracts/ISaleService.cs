@@ -7,19 +7,19 @@ namespace SellWise.Core.Contracts
     {
         public Task<IEnumerable<ProductViewModel>> ViewAllProducts(int saleId);
 
-        public Task AddProductToSale(int saleId, int productId);
+        public Task AddProductToSale(int saleId, int productId, string userId);
 
-        public Task RemoveProductFromSale(int saleId, int productId);
+        public Task RemoveProductFromSale(int saleId, int productId, string userId);
 
-        public Task IncreaseProductQuantity(int saleId, int productId);
+        public Task IncreaseProductQuantity(int saleId, int productId, string userId);
 
-        public Task DecreaseProductQuantity(int saleId, int productId);
+        public Task DecreaseProductQuantity(int saleId, int productId, string userId);
 
         public Task<IEnumerable<SaleViewModel>> MySales(string userId);
 
         public Task CreateSale(string userId);
 
-        public Task<SaleViewModel> GetSale(int saleId);
+        public Task<SaleViewModel> GetSale(int saleId, string userId);
 
         public Task FinalizeSale(int saleId, string userId);
 
@@ -27,6 +27,6 @@ namespace SellWise.Core.Contracts
 
         public Task DeleteSale(int saleId, string userId);
 
-        public Task AddDiscount(int saleId, int discountPercentage);
+        public Task AddDiscount(int saleId, int discountPercentage, string userId);
     }
 }

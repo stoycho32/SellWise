@@ -67,10 +67,10 @@ namespace SellWise.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task<SaleViewModel> GetSale(int saleId)
+        public async Task<SaleViewModel> GetSale(int saleId, string userId)
         {
             SaleViewModel? sale = await this.repository.AllAsReadOnly<Sale>()
-                .Where(c => c.Id == saleId)
+                .Where(c => c.Id == saleId && c.CashierId == userId)
                 .Select(c => new SaleViewModel()
                 {
                     Id = c.Id,
@@ -140,7 +140,7 @@ namespace SellWise.Core.Services
             throw new NotImplementedException();
         }
 
-        public async Task DecreaseProductQuantity(int saleId, int productId)
+        public async Task DecreaseProductQuantity(int saleId, int productId, string userId)
         {
             Sale? sale = await this.repository.All<Sale>()
                 .AsSplitQuery()
@@ -152,6 +152,11 @@ namespace SellWise.Core.Services
             if (sale == null)
             {
                 throw new ArgumentException("The Product Quantity Cannot Be Decreased Because The Sale Is Not Found");
+            }
+
+            if (sale.CashierId != userId)
+            {
+                throw new InvalidOperationException("You Are Not Allowed To Decrease Product Quantity. You Are Not The Owner Of This Sale");
             }
 
             if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
@@ -182,7 +187,7 @@ namespace SellWise.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task IncreaseProductQuantity(int saleId, int productId)
+        public async Task IncreaseProductQuantity(int saleId, int productId, string userId)
         {
             Sale? sale = await this.repository.All<Sale>()
                 .AsSplitQuery()
@@ -196,6 +201,11 @@ namespace SellWise.Core.Services
                 throw new ArgumentException("The Product Quantity Cannot Be Increased Because The Sale Is Not Found");
             }
 
+            if (sale.CashierId != userId)
+            {
+                throw new InvalidOperationException("You Are Not Allowed To Increase Product Quantity. You Are Not The Owner Of This Sale");
+            }
+
             if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
             {
                 throw new InvalidOperationException("You Cannot Incrase Product Quantity In a Sale That Is Finalized");
@@ -205,6 +215,8 @@ namespace SellWise.Core.Services
             {
                 throw new ArgumentException("The Sale Does Not Contain The Product");
             }
+
+
 
             SaleProduct? saleProduct = sale.SaleProducts.FirstOrDefault(c => c.ProductId == productId);
 
@@ -217,7 +229,7 @@ namespace SellWise.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task AddProductToSale(int saleId, int productId)
+        public async Task AddProductToSale(int saleId, int productId, string userId)
         {
             Product? productToAdd = await this.repository.All<Product>()
                 .Where(c => c.Id == productId).FirstOrDefaultAsync();
@@ -236,6 +248,11 @@ namespace SellWise.Core.Services
             if (sale == null)
             {
                 throw new ArgumentException("The Sale Cannot Be Found");
+            }
+
+            if (sale.CashierId != userId)
+            {
+                throw new InvalidOperationException("You Are Not Allowed To Add Products To This Sale. You Are Not The Owner Of It");
             }
 
             if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
@@ -269,7 +286,7 @@ namespace SellWise.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task RemoveProductFromSale(int saleId, int productId)
+        public async Task RemoveProductFromSale(int saleId, int productId, string userId)
         {
             Sale? sale = await this.repository.All<Sale>()
                 .AsSplitQuery()
@@ -280,6 +297,11 @@ namespace SellWise.Core.Services
             if (sale == null)
             {
                 throw new ArgumentException("The Sale Cannot Be Found");
+            }
+
+            if (sale.CashierId != userId)
+            {
+                throw new InvalidOperationException("You Are Not Allowed To Remove Products From This Sale. You Are Not The Owner Of It");
             }
 
             if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
@@ -316,7 +338,7 @@ namespace SellWise.Core.Services
             return products;
         }
 
-        public async Task AddDiscount(int saleId, int discountPercentage)
+        public async Task AddDiscount(int saleId, int discountPercentage, string userId)
         {
             throw new NotImplementedException();
         }
