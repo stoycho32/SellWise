@@ -321,5 +321,21 @@ namespace SellWise.Core.Services
             decimal totalPrice = sale.SaleProducts.Sum(c => c.ProductQuantity * c.Product.ProductSellingPrice);
             return totalPrice;
         }
+
+        public async Task AddDiscount(int saleId, int discountPercentage)
+        {
+            Sale? sale = await this.repository.All<Sale>()
+                .AsSplitQuery()
+                .Include(c => c.SaleProducts)
+                .ThenInclude(c => c.Product)
+                .Where(c => c.Id == saleId).FirstOrDefaultAsync();
+
+            if (sale == null)
+            {
+                throw new ArgumentException("The Sale Cannot Be Found");
+            }
+
+
+        }
     }
 }

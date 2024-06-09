@@ -26,5 +26,7 @@ namespace SellWise.Core.Contracts
         public Task SaleDetails(int saleId);
 
         public Task DeleteSale(int saleId, string userId);
+
+        public Task AddDiscount(int saleId, int discountPercentage);
     }
 }
