@@ -316,15 +316,15 @@ namespace SellWise.Core.Services
             return products;
         }
 
+        public async Task AddDiscount(int saleId, int discountPercentage)
+        {
+            throw new NotImplementedException();
+        }
+
         private decimal CalculateTotalPrice(Sale sale)
         {
             decimal totalPrice = sale.SaleProducts.Sum(c => c.ProductQuantity * c.Product.ProductSellingPrice);
             return totalPrice;
-        }
-
-        public async Task AddDiscount(int saleId, int discountPercentage)
-        {
-            throw new NotImplementedException();
         }
     }
 }
