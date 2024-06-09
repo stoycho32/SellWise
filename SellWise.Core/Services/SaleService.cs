@@ -169,6 +169,13 @@ namespace SellWise.Core.Services
                 throw new ArgumentException("The Sale Does Not Contain The Product");
             }
 
+            if (sale.IsDiscountAplied == true || sale.DiscountPercentage != null || sale.TotalPriceWithDiscount != null)
+            {
+                sale.IsDiscountAplied = false;
+                sale.DiscountPercentage = null;
+                sale.TotalPriceWithDiscount = null;
+            }
+
             SaleProduct? saleProduct = sale.SaleProducts.FirstOrDefault(c => c.ProductId == productId);
 
             if (saleProduct != null)
@@ -216,7 +223,12 @@ namespace SellWise.Core.Services
                 throw new ArgumentException("The Sale Does Not Contain The Product");
             }
 
-
+            if (sale.IsDiscountAplied == true || sale.DiscountPercentage != null || sale.TotalPriceWithDiscount != null)
+            {
+                sale.IsDiscountAplied = false;
+                sale.DiscountPercentage = null;
+                sale.TotalPriceWithDiscount = null;
+            }
 
             SaleProduct? saleProduct = sale.SaleProducts.FirstOrDefault(c => c.ProductId == productId);
 
@@ -258,6 +270,13 @@ namespace SellWise.Core.Services
             if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
             {
                 throw new InvalidOperationException("You Cannot Add Product To a Finalized Sale");
+            }
+
+            if (sale.IsDiscountAplied == true || sale.DiscountPercentage != null || sale.TotalPriceWithDiscount != null)
+            {
+                sale.IsDiscountAplied = false;
+                sale.DiscountPercentage = null;
+                sale.TotalPriceWithDiscount = null;
             }
 
             if (sale.SaleProducts.Any(c => c.ProductId == productToAdd.Id))
@@ -314,6 +333,12 @@ namespace SellWise.Core.Services
                 throw new ArgumentException("The Product Cannot Be Deleted Because It Was Not Added To The Sale");
             }
 
+            if (sale.IsDiscountAplied == true || sale.DiscountPercentage != null || sale.TotalPriceWithDiscount != null)
+            {
+                sale.IsDiscountAplied = false;
+                sale.DiscountPercentage = null;
+                sale.TotalPriceWithDiscount = null;
+            }
 
             sale.SaleProducts.RemoveAll(c => c.ProductId == productId);
 
