@@ -389,6 +389,7 @@ namespace SellWise.Core.Services
 
             sale.TotalPriceWithDiscount = sale.TotalPrice - (sale.TotalPrice * discount);
             sale.IsDiscountAplied = true;
+            sale.DiscountPercentage = discountPercentage;
             await this.repository.SaveChangesAsync();
         }
 
