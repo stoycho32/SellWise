@@ -5,6 +5,7 @@ using SellWise.Core.Models.ProductModel;
 using SellWise.Core.Models.SaleModel;
 using SellWise.Infrastructure.Data.Models;
 using SellWise.Infrastructure.Repository;
+using System.Security.Cryptography.Xml;
 
 namespace SellWise.Core.Services
 {
@@ -130,9 +131,23 @@ namespace SellWise.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
-        public Task FinalizeSale(int saleId, string userId)
+        public async Task FinalizeSale(int saleId, string userId)
         {
-            throw new NotImplementedException();
+            Sale? sale = await this.repository.All<Sale>()
+                .AsSplitQuery()
+                .Where(c => c.Id == saleId)
+                .Include(c => c.SaleProducts)
+                .ThenInclude(c => c.Product)
+                .FirstOrDefaultAsync();
+
+            if (sale == null)
+            {
+                throw new ArgumentException("The Sale Cannot Be Finalized As It Was Not Found");
+            }
+
+
+
+
         }
 
         public Task SaleDetails(int saleId)
@@ -390,6 +405,35 @@ namespace SellWise.Core.Services
             sale.TotalPriceWithDiscount = sale.TotalPrice - (sale.TotalPrice * discount);
             sale.IsDiscountAplied = true;
             sale.DiscountPercentage = discountPercentage;
+            await this.repository.SaveChangesAsync();
+        }
+
+        public async Task RemoveDiscountFromSale(int saleId, string userId)
+        {
+            Sale? sale = await this.repository.All<Sale>()
+                .AsSplitQuery()
+                .Where(c => c.Id == saleId)
+                .FirstOrDefaultAsync();
+
+            if (sale == null)
+            {
+                throw new ArgumentException("The Discount Of The Sale Cannot Be Removed As The Sale Cannot Be Found");
+            }
+
+            if (sale.IsDiscountAplied == false || sale.DiscountPercentage == null || sale.TotalPriceWithDiscount == null)
+            {
+                throw new InvalidOperationException("The Sale Does Not Have Any Discount");
+            }
+
+            if (sale.CashierId != userId)
+            {
+                throw new ArgumentException("You Do Not Have Permission to Remove Discount Of This Sale");
+            }
+
+            sale.IsDiscountAplied = false;
+            sale.DiscountPercentage = null;
+            sale.TotalPriceWithDiscount = null;
+
             await this.repository.SaveChangesAsync();
         }
 

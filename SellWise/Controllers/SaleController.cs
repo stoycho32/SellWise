@@ -111,5 +111,17 @@ namespace SellWise.Controllers
 
             return RedirectToAction(nameof(Sale), new { saleId });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveDiscountFromSale(int saleId)
+        {
+            string userId = User.Id();
+
+            await this.saleService.RemoveDiscountFromSale(saleId, userId);
+
+            ;
+
+            return RedirectToAction(nameof(Sale), new { saleId });
+        }
     }
 }
