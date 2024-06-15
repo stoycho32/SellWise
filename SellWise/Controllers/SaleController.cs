@@ -119,8 +119,6 @@ namespace SellWise.Controllers
 
             await this.saleService.RemoveDiscountFromSale(saleId, userId);
 
-            ;
-
             return RedirectToAction(nameof(Sale), new { saleId });
         }
     }
