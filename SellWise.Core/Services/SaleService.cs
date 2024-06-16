@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SellWise.Core.Contracts;
 using SellWise.Core.Models.ProductModel;
 using SellWise.Core.Models.SaleModel;
 using SellWise.Infrastructure.Data.Models;
 using SellWise.Infrastructure.Repository;
-using System.Security.Cryptography.Xml;
+using System.Text;
 
 namespace SellWise.Core.Services
 {
@@ -18,7 +17,7 @@ namespace SellWise.Core.Services
             this.repository = repository;
         }
 
-
+        //To Implement Sale Details in order to check them when it is finished
         public async Task<IEnumerable<SaleViewModel>> MySales(string userId)
         {
             IEnumerable<SaleViewModel> sales = await this.repository.AllAsReadOnly<Sale>()
@@ -138,6 +137,7 @@ namespace SellWise.Core.Services
                 .Where(c => c.Id == saleId)
                 .Include(c => c.SaleProducts)
                 .ThenInclude(c => c.Product)
+                .Include(c => c.Shift)
                 .FirstOrDefaultAsync();
 
             if (sale == null)
@@ -145,9 +145,37 @@ namespace SellWise.Core.Services
                 throw new ArgumentException("The Sale Cannot Be Finalized As It Was Not Found");
             }
 
+            if (sale.IsFinalized == true || sale.FinalizationDateTime != null)
+            {
+                throw new InvalidOperationException("The Sale Is Already Finalized");
+            }
 
+            if (sale.CashierId != userId)
+            {
+                throw new ArgumentException("You Are Not Allowed To Finalize This Sale");
+            }
 
+            foreach (var product in sale.SaleProducts)
+            {
+                product.Product.ProductQuantity -= product.ProductQuantity;
+            }
 
+            sale.IsFinalized = true;
+            sale.FinalizationDateTime = DateTime.Now;
+
+            if (sale.IsDiscountAplied == true)
+            {
+                sale.FinalPrice = sale.TotalPriceWithDiscount;
+            }
+            else
+            {
+                sale.FinalPrice = sale.TotalPrice;
+            }
+
+            sale.Shift.ShiftTotalAmount += decimal.Parse(sale.FinalPrice.ToString());
+            //await this.repository.SaveChangesAsync();
+
+            this.CreateBillReceipt(sale);
         }
 
         public Task SaleDetails(int saleId)
@@ -441,6 +469,58 @@ namespace SellWise.Core.Services
         {
             decimal totalPrice = sale.SaleProducts.Sum(c => c.ProductQuantity * c.Product.ProductSellingPrice);
             return totalPrice;
+        }
+
+        private void CreateBillReceipt(Sale sale)
+        {
+            string billName = "Bill - " + sale.Id;
+            string bill = "C:\\Users\\karad\\OneDrive\\Desktop\\ASPNET Products\\SellWise\\SellWise\\SellWise.Core\\Bills\\" + billName;
+
+            if (!File.Exists(bill))
+            {
+                using (FileStream fs = File.Create(bill))
+                {
+                    Byte[] billTitle = new UTF8Encoding().GetBytes($"Bill Number: {sale.Id}{Environment.NewLine}");
+                    fs.Write(billTitle, 0, billTitle.Length);
+                    Byte[] billStartDate = new UTF8Encoding().GetBytes($"Bill Start Date: {sale.SaleStartDateTime}{Environment.NewLine}");
+                    fs.Write(billStartDate, 0, billStartDate.Length);
+                    Byte[] billEndDate = new UTF8Encoding().GetBytes($"Bill End Date: {sale.FinalizationDateTime}{Environment.NewLine}");
+                    fs.Write(billEndDate, 0, billEndDate.Length);
+
+                    foreach (var product in sale.SaleProducts)
+                    {
+                        Byte[] billProduct = new UTF8Encoding()
+                            .GetBytes($"Product: {product.Product.ProductName}" +
+                            $" - Price: {product.Product.ProductSellingPrice}" +
+                            $": Quantity: {product.ProductQuantity} - Total Price: {product.Product.ProductSellingPrice * product.ProductQuantity}{Environment.NewLine}");
+
+                        fs.Write(billProduct, 0, billProduct.Length);
+                    }
+
+                    if (sale.IsDiscountAplied == true)
+                    {
+                        Byte[] billDiscount = new UTF8Encoding().GetBytes($"Discount: {sale.DiscountPercentage}%{Environment.NewLine}");
+                        fs.Write(billDiscount, 0, billDiscount.Length);
+
+                        Byte[] billTotalPrice = new UTF8Encoding().GetBytes($"Bill Total Price: {sale.TotalPrice}{Environment.NewLine}");
+                        fs.Write(billTotalPrice, 0, billTotalPrice.Length);
+
+                        Byte[] billTotalPriceWithDiscount = new UTF8Encoding().GetBytes($"Bill Total Price With Discount: {sale.FinalPrice}{Environment.NewLine}");
+                        fs.Write(billTotalPriceWithDiscount, 0, billTotalPriceWithDiscount.Length);
+
+                        Byte[] billFinalPrice = new UTF8Encoding().GetBytes($"Bill Final Price: {sale.FinalPrice}");
+                        fs.Write(billFinalPrice, 0, billFinalPrice.Length);
+                    }
+                    else
+                    {
+                        Byte[] billDiscount = new UTF8Encoding().GetBytes($"Discount: N/A{Environment.NewLine}");
+                        fs.Write(billDiscount, 0, billDiscount.Length);
+
+                        Byte[] billTotalPrice = new UTF8Encoding().GetBytes($"Bill Total Price: {sale.FinalPrice}{Environment.NewLine}");
+                        fs.Write(billTotalPrice, 0, billTotalPrice.Length);
+                    }
+                }
+            }
         }
     }
 }

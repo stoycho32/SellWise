@@ -121,5 +121,15 @@ namespace SellWise.Controllers
 
             return RedirectToAction(nameof(Sale), new { saleId });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> FinalizeSale(int saleId)
+        {
+            string userId = User.Id();
+
+            await this.saleService.FinalizeSale(saleId, userId);
+
+            return RedirectToAction(nameof(MySales));
+        }
     }
 }

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\SellWise.Infrastructure\SellWise.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Bills\" />
+  </ItemGroup>
+
 </Project>

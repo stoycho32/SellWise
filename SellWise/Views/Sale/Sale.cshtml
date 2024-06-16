@@ -126,7 +126,12 @@
                 Remove Discount
             </button>
         </form>
-        <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #6AFF89; border: none; box-shadow: none">Finalize</a>
+        <form asp-controller="Sale" asp-action="FinalizeSale" method="post" style="margin: 0;">
+            <input type="hidden" name="saleId" value="@Model.Id" />
+            <button type="submit" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #6AFF89; border: none; box-shadow: none">
+                Finalize
+            </button>
+        </form>
         <a asp-controller="Sale" asp-action="MySales" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; color: #FF9F9F; background-color: #1D7FCC; border: none; box-shadow: none">Back To Sales</a>
     </div>
 </div>
@@ -134,3 +139,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+@* <a asp-controller="Sale" asp-action="Sale" asp-route-saleId="@Model.Id" class="btn btn-success p-3 fw-bold rounded-pill me-2" style="width: 150px; background-color: #6AFF89; border: none; box-shadow: none">Finalize</a>
+ *@
