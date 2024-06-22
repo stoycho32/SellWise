@@ -17,7 +17,6 @@ namespace SellWise.Core.Services
             this.repository = repository;
         }
 
-        //To Implement Sale Details in order to check them when it is finished
         public async Task<IEnumerable<SaleViewModel>> MySales(string userId)
         {
             IEnumerable<SaleViewModel> sales = await this.repository.AllAsReadOnly<Sale>()
