@@ -2,11 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SellWise.Infrastructure.Data.Models;
 using SellWise.Infrastructure.Data.SeedDatabase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SellWise.Infrastructure.Data.EntityConfiguration
 {

@@ -42,15 +42,6 @@ namespace SellWise.Infrastructure.Data.Models
         [Required]
         public bool IsDeleted { get; set; }
 
-
-
-        //RELATIONS
-        [Required]
-        public int ManufacturerId { get; set; }
-        [ForeignKey(nameof(ManufacturerId))]
-        public Manufacturer Manufacturer { get; set; }
-
-
         [InverseProperty(nameof(Product))]
         public List<SaleProduct> SaleProducts { get; set; }
     }

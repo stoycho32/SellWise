@@ -14,7 +14,6 @@ namespace SellWise.Data
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Cashier> Cashiers { get; set; }
         public DbSet<Sale> Sales { get; set; } 
         public DbSet<Shift> Shifts { get; set; }
@@ -29,7 +28,6 @@ namespace SellWise.Data
 
             builder.ApplyConfiguration(new SaleProductConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
-            builder.ApplyConfiguration(new ManufacturerConfiguration());
 
             base.OnModelCreating(builder);
         }
