@@ -1,4 +1,5 @@
-﻿using SellWise.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using SellWise.Data;
 using SellWise.Infrastructure.Data.Models;
 
 namespace SellWise.Infrastructure.Data.SeedDatabase
@@ -10,10 +11,13 @@ namespace SellWise.Infrastructure.Data.SeedDatabase
         public Product Product3 { get; set; }
         public Product Product4 { get; set; }
         public Product Product5 { get; set; }
+        public Cashier AdminUser { get; set; }
+
 
         public SeedData()
         {
             this.SeedProducts();
+            this.SeedAdmin();
         }
 
         public void SeedProducts()
@@ -62,6 +66,24 @@ namespace SellWise.Infrastructure.Data.SeedDatabase
                 ProductDeliveryPrice = 2.10m,
                 ProductSellingPrice = 3.20m,
             };
+        }
+
+        public void SeedAdmin()
+        {
+            var hasher = new PasswordHasher<Cashier>();
+
+            this.AdminUser = new Cashier()
+            {
+                Id = "d3d412e3-bdfd-49fc-89e5-7c53a3075673",
+                UserName = "admin@mail.com",
+                NormalizedUserName = "admin@mail.com",
+                Email = "admin@mail.com",
+                NormalizedEmail = "admin@mail.com",
+                FirstName = "Stoycho",
+                LastName = "Karadaliev"
+            };
+
+            this.AdminUser.PasswordHash = hasher.HashPassword(AdminUser, "Admin123!");
         }
     }
 }

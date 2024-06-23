@@ -28,6 +28,7 @@ namespace SellWise.Data
 
             builder.ApplyConfiguration(new SaleProductConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
+            builder.ApplyConfiguration(new CashierConfiguration());
 
             base.OnModelCreating(builder);
         }
